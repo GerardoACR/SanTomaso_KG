@@ -236,20 +236,78 @@ h3 {
 .team-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin: 34px 0 0;
+  align-items: flex-start;
+  column-gap: 12px;
+  row-gap: 22px;
+  margin: 38px 0 0;
   padding: 0;
   list-style: none;
 }
 
 .team-list li {
-  padding: 8px 12px;
-  border: 1px solid rgba(7, 83, 138, 0.16);
-  border-radius: 999px;
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  align-items: center;
+  width: min(100%, 214px);
+  min-height: 76px;
+  padding: 8px 12px 8px 8px;
+  border: 1px solid rgba(7, 83, 138, 0.18);
+  border-radius: var(--radius);
   color: var(--blue-950);
-  background: rgba(255, 255, 255, 0.62);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 250, 241, 0.62)),
+    radial-gradient(circle at 12% 18%, rgba(255, 85, 51, 0.16), transparent 38%),
+    radial-gradient(circle at 100% 100%, rgba(220, 174, 53, 0.2), transparent 42%);
+  box-shadow: 0 18px 40px rgba(7, 59, 99, 0.12);
+  transform: translateY(var(--rise)) rotate(var(--tilt));
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.team-list li::before {
+  position: absolute;
+  inset: 8px;
+  z-index: -1;
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  border-radius: 6px;
+  content: "";
+}
+
+.team-list li::after {
+  position: absolute;
+  right: 10px;
+  bottom: 7px;
+  width: 42px;
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--coral), var(--gold), var(--blue-800));
+  content: "";
+  opacity: 0.8;
+}
+
+.team-list li:hover {
+  border-color: rgba(7, 83, 138, 0.3);
+  box-shadow: 0 24px 54px rgba(7, 59, 99, 0.18);
+  transform: translateY(calc(var(--rise) - 6px)) rotate(0deg);
+}
+
+.team-list img {
+  width: 54px;
+  height: 54px;
+  border: 2px solid rgba(255, 255, 255, 0.86);
+  border-radius: var(--radius);
+  object-fit: cover;
+  background: #e9e2d4;
+  box-shadow: 0 8px 22px rgba(16, 32, 51, 0.18);
+}
+
+.team-list span {
+  min-width: 0;
+  padding-left: 12px;
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 850;
+  line-height: 1.15;
 }
 
 .hero-media {
@@ -611,6 +669,19 @@ tr:last-child td {
   .status-grid,
   .decision-list {
     grid-template-columns: 1fr;
+  }
+
+  .team-list {
+    gap: 10px;
+  }
+
+  .team-list li {
+    width: 100%;
+    transform: none;
+  }
+
+  .team-list li:hover {
+    transform: translateY(-4px);
   }
 
   .site-nav {
