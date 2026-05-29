@@ -81,3 +81,39 @@ document.querySelectorAll("[data-explain]").forEach((button) => {
     button.textContent = isHidden ? "Nascondi spiegazione" : "Spiega query";
   });
 });
+
+document.querySelectorAll("[data-prompt-carousel]").forEach((carousel) => {
+  const cases = Array.from(carousel.querySelectorAll("[data-case-index]"));
+  const previousButton = carousel.querySelector("[data-carousel-prev]");
+  const nextButton = carousel.querySelector("[data-carousel-next]");
+  const status = carousel.querySelector("[data-case-status]");
+  let activeIndex = cases.findIndex((item) => item.classList.contains("is-active"));
+
+  if (activeIndex < 0) activeIndex = 0;
+
+  function showCase(index) {
+    activeIndex = (index + cases.length) % cases.length;
+
+    cases.forEach((item, itemIndex) => {
+      const isActive = itemIndex === activeIndex;
+      item.hidden = !isActive;
+      item.classList.toggle("is-active", isActive);
+    });
+
+    if (status) {
+      status.textContent = `${activeIndex + 1} / ${cases.length}`;
+    }
+  }
+
+  previousButton?.addEventListener("click", () => {
+    showCase(activeIndex - 1);
+  });
+
+  nextButton?.addEventListener("click", () => {
+    showCase(activeIndex + 1);
+  });
+
+  if (cases.length > 0) {
+    showCase(activeIndex);
+  }
+});

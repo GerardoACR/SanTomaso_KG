@@ -463,6 +463,10 @@ LIMIT 30</code></pre>
         <p>
           Una volta selezionata l'opera, DBpedia viene usata per controllare quali elementi del contenuto pittorico possono essere collegati a risorse esterne. Il controllo distingue tra collegamenti forti, ponti concettuali e informazioni che restano da modellare localmente.
         </p>
+        <p>
+          Per questa fase abbiamo usato il primo prompt sottoposto ai diversi LLM, come documentato nella
+          <a href="#prompting">sezione dedicata al prompting</a>.
+        </p>
       </div>
 
       <div class="exploration-flow dbpedia-flow" aria-label="Passaggi dell'esplorazione DBpedia">
@@ -477,7 +481,12 @@ LIMIT 30</code></pre>
               La prima verifica riguarda l'autore attribuito. DBpedia non restituisce una risorsa biografica per Venanzio Pisani, né cercando la forma "Venanzio Pisani" né la forma catalografica "Pisani Venanzio", anche senza dipendere da etichette italiane.
             </p>
             <p>
-              Questo esito viene registrato come risultato della ricerca: per Pisani non proponiamo un collegamento esterno a DBpedia. Le informazioni disponibili sull'autore restano quindi quelle documentate da ArCo, in particolare tramite <code>a-cd:historicalInformation</code> nella scheda dell'opera.
+              Quindi, per Pisani non proponiamo un collegamento esterno a DBpedia, ma sicuramente cercheremo di integrarlo con aiuto dei LLM. Le informazioni disponibili sull'autore restano quindi quelle documentate da ArCo, in particolare tramite <code>a-cd:historicalInformation</code> nella scheda dell'opera.
+            </p>
+            <p>
+              Il contenuto storico può essere verificato nella
+              <a href="https://dati.cultura.gov.it/lodview-arco/resource/HistoricOrArtisticProperty/1800179488.html" target="_blank" rel="noreferrer">scheda LodView ArCo della risorsa 1800179488</a>,
+              dove compare la proprietà <code>a-cd:historicalInformation</code>.
             </p>
             <details class="query-details">
               <summary>Mostra query</summary>
@@ -548,29 +557,29 @@ LIMIT 5</code></pre>
                 <pre><code id="dbpedia-query-candidates">PREFIX dbr: &lt;http://dbpedia.org/resource/&gt;
 PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
 
-SELECT ?candidato ?risorsa ?label
+SELECT ?candidato ?risorsa (SAMPLE(?label) AS ?label)
 WHERE {
   VALUES (?candidato ?risorsa) {
-    ("gepid:SanTommasoDAquino" dbr:Thomas_Aquinas)
-    ("gepid:AbitoDomenicano" dbr:Dominican_Order)
-    ("gepid:LibroAperto" dbr:Book)
-    ("gepid:Scrittoio" dbr:Desk)
-    ("gepid:RaggioDiSole" dbr:Sunlight)
-    ("gepid:Calice" dbr:Chalice)
-    ("gepid:Ostia" dbr:Sacramental_bread)
-    ("gepid:ScritturaIspirata" dbr:Writing)
-    ("gepid:IspirazioneDivina" dbr:Divine_inspiration)
-    ("gepid:Eucaristia" dbr:Eucharist)
-    ("gepid:OrdineDomenicano" dbr:Dominican_Order)
+    ("San Tommaso d'Aquino" dbr:Thomas_Aquinas)
+    ("abito domenicano" dbr:Dominican_Order)
+    ("libro aperto" dbr:Book)
+    ("scrittoio" dbr:Desk)
+    ("raggio di sole" dbr:Sunlight)
+    ("calice" dbr:Chalice)
+    ("ostia" dbr:Sacramental_bread)
+    ("scrittura ispirata" dbr:Writing)
+    ("ispirazione divina" dbr:Divine_inspiration)
+    ("eucaristia" dbr:Eucharist)
+    ("Ordine Domenicano" dbr:Dominican_Order)
   }
   ?risorsa rdfs:label ?label .
-  FILTER(LANG(?label) = "en")
 }
+GROUP BY ?candidato ?risorsa
 ORDER BY ?candidato</code></pre>
                 <div class="query-explanation" id="dbpedia-explain-candidates" hidden>
                   <h5>Perché è costruita così</h5>
-                  <p><code>VALUES</code> permette di dichiarare esplicitamente la tabella di corrispondenze tra entità locali del progetto e risorse DBpedia candidate. In questo modo la query non cerca genericamente nel grafo, ma verifica una lista controllata di ponti semantici.</p>
-                  <p>La query usa direttamente le etichette inglesi di DBpedia. In questa fase non è necessario cercare anche le label italiane: l'obiettivo è verificare l'esistenza di un ponte esterno stabile per ciascuna entità candidata.</p>
+                  <p><code>VALUES</code> permette di dichiarare esplicitamente una lista di elementi iconografici e teologici da verificare in DBpedia. In questa fase i nomi dei candidati restano descrittivi: non vengono ancora trattati come entità locali definitive del progetto.</p>
+                  <p>La query non filtra per lingua, perché l'obiettivo non è produrre una presentazione linguistica finale, ma verificare se esiste almeno un ponte esterno stabile per ciascun elemento di interesse. <code>SAMPLE(?label)</code> evita di mostrare tutte le etichette multilingui disponibili e mantiene una riga per ogni candidato.</p>
                 </div>
               </article>
             </details>
@@ -714,25 +723,210 @@ LIMIT 60</code></pre>
     <section class="section" id="prompting">
       <div class="section-heading">
         <p class="eyebrow">Prompting</p>
-        <h2>Gli LLM come strumenti di proposta, non come autorità</h2>
+        <h2>Documentazione degli interventi dei LLM</h2>
         <p>
-          I prompt devono separare estrazione, modellazione e valutazione. Per un gruppo di cinque persone è opportuno confrontare almeno tre modelli.
+          In questa sezione presentiamo il metodo utilizzato per confrontare diversi modelli linguistici attraverso tecniche di prompting. Il confronto non valuta solo la qualità delle risposte, ma anche il comportamento dei modelli in condizioni operative diverse.
         </p>
       </div>
 
-      <div class="prompt-grid">
-        <article>
-          <h3>Prompt senza esempi</h3>
-          <p>Identificare soggetto, attributi iconografici e possibili entità DBpedia partendo dalla descrizione ArCo.</p>
+      <div class="content-flow">
+        <article class="enrichment-note">
+          <h3>Tecniche utilizzate</h3>
+          <p>
+            Il confronto si è basato su tre strategie: zero-shot prompt, few-shot prompt e chain-of-thought prompt. Questo ci permette di osservare come cambia la proposta di entità e triple al variare della guida fornita al modello.
+          </p>
         </article>
-        <article>
-          <h3>Prompt con esempi</h3>
-          <p>Mostrare esempi di triple corrette e scorrette per ridurre confusioni tra opera, soggetto e concetto.</p>
+
+        <div class="prompt-grid">
+          <article>
+            <h3>google/gemma-4-26b-a4b</h3>
+            <p>Testato in locale, senza accesso a Internet. Questa configurazione permette di controllare parametri come finestra di contesto, temperatura, top-p sampling, repeat penalty e altre impostazioni personalizzabili.</p>
+          </article>
+          <article>
+            <h3>DeepSeek-V3 Instant</h3>
+            <p>Configurato in modalità di risposta immediata, con ricerca web abilitata. Questo consente di osservare il comportamento del modello in un contesto con accesso a informazioni online.</p>
+          </article>
+          <article>
+            <h3>GPT-5.5 Thinking</h3>
+            <p>Utilizzato con accesso a Internet come modello di riferimento avanzato, utile per confrontare le proposte generate dagli altri modelli e valutarne la coerenza.</p>
+          </article>
+        </div>
+
+        <article class="enrichment-note">
+          <h3>Obiettivo del confronto</h3>
+          <p>
+            La scelta dei modelli serve ad analizzare risposte prodotte in condizioni diverse: esecuzione locale senza Internet, risposta immediata con ricerca web e modello avanzato con capacità di ragionamento e accesso online.
+          </p>
         </article>
-        <article>
-          <h3>Valutazione</h3>
-          <p>Classificare ogni tripla come accettata, modificata, scartata o incerta, indicando la fonte di verifica.</p>
+
+        <article class="enrichment-note">
+          <h3>Valutazione delle proposte</h3>
+          <p>
+            Ogni proposta viene verificata distinguendo tra triple accettabili, triple da modificare, collegamenti incerti e informazioni da scartare perché non supportate da ArCo, DBpedia o altre fonti controllabili.
+          </p>
         </article>
+
+        <div class="prompt-case-carousel" data-prompt-carousel>
+          <div class="prompt-case-header">
+            <div>
+              <h3>Casi d'uso</h3>
+              <p>Confronto sintetico delle risposte prodotte dai tre modelli per uno stesso compito di arricchimento.</p>
+            </div>
+            <div class="prompt-case-controls" aria-label="Navigazione casi d'uso">
+              <button type="button" data-carousel-prev aria-label="Caso precedente">‹</button>
+              <span data-case-status>1 / 2</span>
+              <button type="button" data-carousel-next aria-label="Caso successivo">›</button>
+            </div>
+          </div>
+
+          <article class="prompt-case is-active" data-case-index="0">
+            <p class="case-label">Caso ipotetico 1</p>
+            <h4>Prompt zero-shot per ottenere informazioni rilevanti sul dipinto</h4>
+            <p class="case-prompt">
+              "Analizza il dipinto "San Tommaso d'Aquino" di Venanzio Pisani, fornendo una descrizione dell'opera che includa gli elementi iconografici principali e altri dati rilevanti."
+            </p>
+            <div class="llm-comparison-grid">
+              <article>
+                <h3>Risposta di gemma-4-26b-a4b</h3>
+                <p>È importante fare una piccola premessa: nei principali cataloghi di storia dell'arte internazionale e nei database dei grandi maestri, <strong>non risulta un pittore di fama storica chiamato "Venanzio Pisani"</strong> associato a un'opera celebre di San Tommaso d'Aquino. È possibile che il nome dell'autore contenga un refuso (forse intendevi un altro artista o un autore locale/contemporaneo meno noto) oppure che si tratti di un'opera specifica di una collezione privata o parrocchiale.</p>
+                <p>Tuttavia, l'iconografia di <strong>San Tommaso d'Aquino</strong> è estremamente codificata e costante nella storia dell'arte (da Fra Angelico a Ghirlandaio, fino ai maestri del Barocco). Se ti riferisci a un dipinto che ritrae il Santo, posso fornirti un'analisi dettagliata degli <strong>elementi iconografici universali</strong> che dovresti cercare in quell'opera per interpretarla correttamente.</p>
+                <p>Ecco un'analisi dei simboli tipici di San Tommaso d'Aquino:</p>
+                <h4>1. L'Abito (L'appartenenza all'Ordine)</h4>
+                <p>Il primo elemento identificativo è l'abbigliamento. San Tommaso era un membro dell'<strong>Ordine dei Predicatori (Domenicani)</strong>. In quasi tutte le rappresentazioni, il Santo indossa:</p>
+                <ul>
+                  <li><strong>La tunica bianca:</strong> Simbolo di purezza e della vita contemplativa.</li>
+                  <li><strong>Il mantello (cappa) nero:</strong> Che copre la tunica, simbolo di penitenza e della severità dell'ordine.</li>
+                </ul>
+                <p>Se nel dipinto vedi un monaco con questo contrasto cromatico netto (bianco e nero), l'identificazione è quasi certa.</p>
+                <h4>2. Il Libro (La Summa Theologica)</h4>
+                <p>L'attributo principale di Tommaso d'Aquino è il <strong>libro</strong>. Questo non è un semplice accessorio, ma rappresenta la sua immensa produzione dottrinale, in particolare la <em>Summa Theologiae</em>.</p>
+                <ul>
+                  <li><strong>Significato:</strong> Rappresenta la Scolastica, l'unione tra fede e ragione. Il libro simboleggia la dottrina che egli ha codificato per spiegare i misteri della fede attraverso la logica aristotelica.</li>
+                </ul>
+                <h4>3. Il Sole (L'intelletto illuminato)</h4>
+                <p>Spesso, intorno alla testa del Santo o in uno sfondo luminoso, si nota un <strong>sole</strong> o dei raggi di luce.</p>
+                <ul>
+                  <li><strong>Significato:</strong> San Tommaso è chiamato il "Sole della Chiesa" (<em>Sol Ecclesiae</em>). La luce rappresenta la <em>sapientia</em> (sapienza) divina che illumina l'intelletto del Santo, permettendogli di comprendere le verità rivelate. Se nel dipinto vedi un'aura solare o una luce particolarmente intensa che colpisce il volto, è un riferimento alla sua illuminazione intellettuale.</li>
+                </ul>
+                <h4>4. La Colomba (L'ispirazione divina)</h4>
+                <p>In alcune rappresentazioni più mistiche, si vede una <strong>colomba</strong> che scende verso l'orecchio del Santo o sopra la sua testa.</p>
+                <ul>
+                  <li><strong>Significato:</strong> Rappresenta lo Spirito Santo. Indica che le sue opere non sono frutto di sola logica umana, ma di ispirazione divina. È il momento in cui la Grazia entra nella mente dell'uomo per trasformare il pensiero in verità sacra.</li>
+                </ul>
+                <h4>5. Gli strumenti della scrittura (Calamo e Inchiostrate)</h4>
+                <p>Spesso il Santo è ritratto mentre scrive o tiene in mano una <strong>penna (calamo)</strong> e un calamaio.</p>
+                <ul>
+                  <li><strong>Significato:</strong> Sottolinea la sua attività di "Dottore della Chiesa" e la fatica dello studio e della scrittura, intesi come forma di preghiera e servizio alla Chiesa.</li>
+                </ul>
+                <h4>Sintesi dell'analisi compositiva</h4>
+                <p>Se dovessi analizzare il dipinto che hai in mente, ti suggerisco di osservare:</p>
+                <ul>
+                  <li><strong>L'ambientazione:</strong> È uno studio (scriptorium) con scaffali pieni di codici? Se sì, l'opera enfatizza la sua natura di studioso. È un altare o una chiesa? Allora enfatizza la sua natura di teologo e santo.</li>
+                  <li><strong>L'espressione del volto:</strong> È concentrato (razionalità/scolastica) o in estasi (mistica/ispirazione)?</li>
+                  <li><strong>La luce:</strong> Da dove proviene? Se proviene dall'alto, indica l'origine divina della sua sapienza.</li>
+                </ul>
+                <p><strong>Se riesci a fornirmi ulteriori dettagli sull'opera (come il luogo in cui si trova o se il nome dell'artista potrebbe essere diverso), sarò lieto di approfondire l'analisi specifica.</strong></p>
+              </article>
+              <article>
+                <h3>Risposta di DeepSeek-V3 Instant</h3>
+                <p>Certamente. Ecco un'analisi del dipinto San Tommaso d'Aquino di Venanzio Pisani basata sui dati del Catalogo Generale dei Beni Culturali.</p>
+                <h4>Descrizione Generale e Collocazione</h4>
+                <p>L'opera è un dipinto a olio su tela, attualmente conservato presso il Museo Diocesano e del Codex di Rossano, in Calabria. È attribuita al pittore e scultore Venanzio Pisani (Serra San Bruno, 1800-1878), realizzata verosimilmente intorno alla metà del XIX secolo, durante il suo periodo di attività a Rossano.</p>
+                <h4>Iconografia e Simboli Principali</h4>
+                <p>L'opera ritrae il Dottore della Chiesa nell'atto intellettuale per eccellenza: lo studio e la scrittura. Ecco gli elementi distintivi:</p>
+                <ul>
+                  <li><strong>Abiti Domenicani:</strong> San Tommaso indossa il saio bianco e lo scapolare nero dell'Ordine dei Predicatori (Domenicani), di cui faceva parte .</li>
+                  <li>
+                    <strong>L'Aquinate:</strong>
+                    <ul>
+                      <li><strong>Simbolo del Sole:</strong> Sul petto, il santo porta una catena con un ciondolo a forma di sole. Questo è il suo attributo iconografico primario, che richiama la luce divina della sapienza che illuminò i suoi scritti .</li>
+                      <li><strong>Scrittoio e Libro:</strong> La scena lo mostra di fianco a uno scrittorio. Con la sinistra regge un libro aperto, mentre la destra è pronta per scrivere, enfatizzando il suo ruolo di teologo e filosofo .</li>
+                    </ul>
+                  </li>
+                  <li><strong>La Visione Divina:</strong> L'elemento più caratteristico è la fonte di ispirazione. In alto, un raggio di sole colpisce il santo. Questa luce proviene direttamente dalla visione di un calice con l'ostia. L'ostia presenta l'iscrizione "IHS" (trigramma greco di Gesù), a ricordare il celebre episodio in cui Tommaso d'Aquino ebbe una rivelazione divina durante la messa, che lo portò a dichiarare che tutto ciò che aveva scritto gli sembrava "paglia" rispetto alla visione di Dio .</li>
+                </ul>
+                <h4>Contesto Artistico e Storico</h4>
+                <p>Venanzio Pisani era un artista rinomato in Calabria per la sua abilità di ritrattista, ovvero per la capacità di rendere i soggetti in maniera molto fedele al reale. Questa abilità, ereditata dal padre Stefano, gli valse la protezione dell'arcivescovo Bruno Maria Tedeschi .</p>
+                <p>Secondo le note storico-critiche, il dipinto riflette proprio lo stile dei ritratti celebrativi commissionati dalla famiglia Tedeschi. Inoltre, la scelta del soggetto è legata alla storia personale del committente, l'arcivescovo, che durante gli anni di studio presso il convento domenicano di Soriano Calabro aveva sviluppato una particolare devozione per San Tommaso .</p>
+              </article>
+              <article>
+                <h3>Risposta di GPT-5.5 Thinking</h3>
+                <h4>Analisi del dipinto <em>San Tommaso d’Aquino</em> di Venanzio Pisani</h4>
+                <p>Il dipinto <em>San Tommaso d’Aquino</em> è un’opera a olio su tela attribuita a <strong>Venanzio Pisani</strong>, conservata presso il <strong>Museo Diocesano e del Codex</strong> di Rossano, oggi Corigliano-Rossano, in provincia di Cosenza. La scheda del Catalogo Generale dei Beni Culturali la registra come bene storico-artistico con il <strong>codice di catalogo nazionale 1800179488</strong>. (<a href="https://www.catalogo.beniculturali.it/detail/HistoricOrArtisticProperty/1800179488" target="_blank" rel="noreferrer">Catalogo dei Beni Culturali</a>)</p>
+                <p>L’opera raffigura <strong>San Tommaso d’Aquino nell’atto di scrivere</strong>. Il santo è rappresentato accanto a uno scrittoio: con la mano sinistra sostiene un libro aperto, mentre con la destra sembra prepararsi alla scrittura. La scena non presenta Tommaso soltanto come studioso, ma come autore ispirato: un raggio di luce lo illumina a partire dalla visione di un <strong>calice con l’ostia</strong>. Sull’ostia compare anche l’iscrizione <strong>“IHS”</strong>, elemento cristologico ed eucaristico esplicitamente registrato nella scheda catalografica. (<a href="https://www.catalogo.beniculturali.it/detail/HistoricOrArtisticProperty/1800179488" target="_blank" rel="noreferrer">Catalogo dei Beni Culturali</a>)</p>
+                <p>Gli elementi iconografici principali sono:</p>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Elemento</th>
+                        <th>Significato iconografico</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Abito domenicano</strong></td>
+                        <td>Identifica Tommaso come membro dell’Ordine dei Predicatori.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Libro aperto e gesto della scrittura</strong></td>
+                        <td>Rimandano alla sua identità di teologo, filosofo e Dottore della Chiesa.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Sole sul petto</strong></td>
+                        <td>Simbolo tradizionale della sapienza sacra e della luce dottrinale attribuita all’Aquinate.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Calice e ostia</strong></td>
+                        <td>Richiamano la dimensione eucaristica della sua teologia e della sua devozione.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Raggio luminoso</strong></td>
+                        <td>Visualizza l’ispirazione divina che guida l’attività intellettuale del santo.</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Iscrizione “IHS” sull’ostia</strong></td>
+                        <td>Rafforza il riferimento cristologico della visione.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>Il <strong>sole sul petto</strong> è un attributo molto importante: nella tradizione iconografica domenicana San Tommaso è spesso raffigurato con il libro e con un sole o una stella raggiata sul cuore o sulla fronte, simbolo della sapienza sacra. Questa simbologia non è decorativa: serve a rappresentare Tommaso come figura luminosa della dottrina cristiana, capace di “illuminare” la Chiesa attraverso il sapere teologico. (<a href="https://www.artedossier.it/en/art-history/work/2747/?utm_source=chatgpt.com" target="_blank" rel="noreferrer">artedossier.it</a>)</p>
+                <p>Il <strong>calice con l’ostia</strong> introduce invece una dimensione più specificamente teologica. La scena collega la scrittura di Tommaso alla contemplazione del mistero eucaristico. Questo è coerente con la tradizione che associa l’Aquinate alla riflessione sull’Eucaristia e agli inni composti per la festa del Corpus Domini. (<a href="https://www.osservatoreromano.va/it/news/2021-06/quo-125/ostia-di-salvezza.html?utm_source=chatgpt.com" target="_blank" rel="noreferrer">osservatoreromano.va</a>)</p>
+                <p>Dal punto di vista storico-critico, la scheda del Catalogo sottolinea che Pisani, originario di Serra San Bruno, lavorò a Rossano dal 1835 grazie alla vicinanza con <strong>Mons. Bruno Tedeschi</strong>. Il dipinto viene collegato a un contesto di committenza ecclesiastica e di devozione domenicana: insieme alla tela raffigurante <strong>San Vincenzo Ferrer</strong>, manifesta la devozione dell’arcivescovo verso santi conosciuti durante gli anni di studio presso il convento domenicano di Soriano Calabro. (<a href="https://www.catalogo.beniculturali.it/detail/HistoricOrArtisticProperty/1800179488" target="_blank" rel="noreferrer">Catalogo dei Beni Culturali</a>)</p>
+                <p>In sintesi, l’opera costruisce un’immagine di San Tommaso come <strong>intellettuale ispirato</strong>, non come semplice studioso. Il libro, la penna e lo scrittoio indicano l’attività razionale e dottrinale; il raggio di luce, il calice, l’ostia e il sole sul petto mostrano che tale attività è presentata come subordinata alla rivelazione e alla sapienza divina. La forza del dipinto sta proprio in questa sintesi: Tommaso appare come figura in cui <strong>studio, fede, contemplazione e autorità teologica</strong> convergono in una sola immagine.</p>
+                <p><strong>Fonti:</strong></p>
+                <ul>
+                  <li><a href="https://www.catalogo.beniculturali.it/detail/HistoricOrArtisticProperty/1800179488" target="_blank" rel="noreferrer">San Tommaso d'Aquino San Tommaso d'Aquino dipinto</a></li>
+                  <li><a href="https://www.artedossier.it/en/art-history/work/2747/?utm_source=chatgpt.com" target="_blank" rel="noreferrer">Tommaso d'Aquino</a></li>
+                  <li><a href="https://www.osservatoreromano.va/it/news/2021-06/quo-125/ostia-di-salvezza.html?utm_source=chatgpt.com" target="_blank" rel="noreferrer">Ostia di salvezza</a></li>
+                </ul>
+              </article>
+            </div>
+          </article>
+
+          <article class="prompt-case" data-case-index="1" hidden>
+            <p class="case-label">Caso ipotetico 2</p>
+            <h4>Valutazione delle triple proposte per la figura di San Tommaso</h4>
+            <p class="case-prompt">
+                Te comparto la descripción de la pintura que se encuentra en el sitio de ARCO sobre la descripción de la pintura "San Tomasso d'Aquino" de Venanzio Pisani: description. ¿Qué elementos me recomiendas buscar en dbpedia para ver si podemos hacer puentes en el arricchimento en relación a la iconografía que aparece al interior, así como información sobre quién es San Tomasso d'Aquino?
+            </p>
+            <div class="llm-comparison-grid">
+              <article>
+                <h3>google/gemma-4-26b-a4b</h3>
+                <p>Lorem ipsum dolor sit amet, produce triple prudenti ma meno ricche, con pochi collegamenti oltre la descrizione immediata dell'opera.</p>
+              </article>
+              <article>
+                <h3>DeepSeek-V3 Instant</h3>
+                <p>Lorem ipsum dolor sit amet, amplia il contesto storico-religioso ma richiede controllo per evitare collegamenti non giustificati.</p>
+              </article>
+              <article>
+                <h3>GPT-5.5 Thinking</h3>
+                <p>Lorem ipsum dolor sit amet, organizza le proposte distinguendo persona rappresentata, attributi iconografici e concetti dottrinali.</p>
+              </article>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
