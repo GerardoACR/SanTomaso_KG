@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
@@ -23,8 +23,8 @@
     <nav class="site-nav" aria-label="Navigazione principale" data-nav>
       <a href="#oggetto">Oggetto</a>
       <a href="#metodo">Metodo</a>
-      <a href="#kg">KG</a>
-      <a href="#sparql">SPARQL</a>
+      <a href="#sparql">Esplorazione</a>
+      <a href="#kg">Knowledge Graph</a>
       <a href="#gap">Gap</a>
       <a href="#prompting">Prompting</a>
       <a href="#rdf">RDF</a>
@@ -38,11 +38,9 @@
       <div class="hero-copy">
         <p class="eyebrow">Metodi semantici per la trasformazione digitale</p>
         <h1>
-          <span>Da</span>
-          <span>descrizione</span>
+          <span>Da descrizione</span>
           <span>testuale a</span>
-          <span>conoscenza</span>
-          <span>RDF</span>
+          <span>conoscenza RDF</span>
         </h1>
         <p class="hero-text">
           Arricchimento semantico di una rappresentazione di San Tommaso d'Aquino in ArCo tramite DBpedia e modelli linguistici.
@@ -83,17 +81,20 @@
       </figure>
     </section>
 
-    <section class="section split" id="oggetto">
-      <div>
+    <section class="section" id="oggetto">
+      <div class="section-intro">
         <p class="eyebrow">Oggetto di studio</p>
-        <h2>Un dipinto con una descrizione iconografica ricca</h2>
-      </div>
-      <div class="content-flow">
+        <h2>Arricchimento semantico della descrizione iconografica e filosofico-religiosa del dipinto</h2>
         <p>
           Il progetto analizza la risorsa ArCo
           <a href="https://w3id.org/arco/resource/HistoricOrArtisticProperty/1800179488" target="_blank" rel="noreferrer">1800179488</a>,
           relativa a un dipinto raffigurante San Tommaso d'Aquino. La scheda descrive il santo in abito domenicano, vicino a uno scrittoio, con un libro aperto e ispirato dalla visione di un calice con l'ostia.
         </p>
+        <p>
+          Il presente lavoro propone un arricchimento semantico della risorsa, modellando in triple RDF non solo informazioni già presenti nella descrizione testuale, ma anche nuova conoscenza strutturata relativa agli elementi iconografici dell'opera e alla figura filosofico-religiosa di san Tommaso d’Aquino in essa rappresentata.
+        </p>
+      </div>
+      <div class="content-flow">
         <div class="fact-grid">
           <article>
             <span>Tipo</span>
@@ -112,8 +113,45 @@
             <strong>Corigliano-Rossano, Calabria</strong>
           </article>
         </div>
+        <article class="enrichment-note">
+          <h3>Strategia di arricchimento della risorsa</h3>
+          <p>
+            L'arricchimento proposto riguarda tre livelli principali: gli elementi iconografici interni all'opera, la figura filosofico-religiosa di san Tommaso d'Aquino e, in modo secondario, alcune informazioni contestuali sull'autore Pisani.
+          </p>
+        </article>
+        <div class="semantic-elements" aria-label="Ambiti dell'arricchimento semantico della risorsa">
+          <article>
+            <span>Iconografia interna</span>
+            <strong>scrittoio, libro aperto, abito domenicano, ciondolo solare, raggio di luce, calice con ostia, iscrizione IHS</strong>
+          </article>
+
+          <article>
+            <span>Figura rappresentata</span>
+            <strong>San Tommaso d'Aquino come domenicano, teologo, filosofo e Dottore della Chiesa</strong>
+          </article>
+
+          <article>
+            <span>Riferimenti dottrinali</span>
+            <strong>scrittura, ispirazione divina, eucaristia e tradizione tomista</strong>
+          </article>
+
+          <article>
+            <span>Autore attribuito</span>
+            <strong>Venanzio Pisani: pittore e ritrattista calabrese attivo nel contesto ecclesiastico di Rossano</strong>
+          </article>
+
+          <article>
+            <span>Collegamenti esterni</span>
+            <strong>ArCo/Catalogo, DBpedia e fonti storico-artistiche validate</strong>
+          </article>
+          <article>
+            <span>Provenienza e affidabilità</span>
+            <strong>dati catalografici, attribuzioni, fonti esterne e livello di certezza</strong>
+          </article>
+        </div>
+
         <p>
-          La scelta è metodologicamente forte perché il testo catalografico contiene elementi che possono diventare entità o relazioni: soggetto rappresentato, attributi iconografici, concetti religiosi e riferimenti storico-culturali.
+          Pensiamo che seguendo questo obiettivo per l'arricchimento, la risorsa diventa più interrogabile, collegabile e riutilizzabile all'interno del Knowledge Graph, mantenendo però una distinzione chiara tra dati catalografici, interpretazioni iconografiche e informazioni contestuali provenienti da fonti esterne.
         </p>
         <div class="link-row">
           <a href="https://catalogo.beniculturali.it/detail/HistoricOrArtisticProperty/1800179488" target="_blank" rel="noreferrer">Scheda Catalogo Generale</a>
@@ -125,9 +163,9 @@
     <section class="section" id="metodo">
       <div class="section-heading">
         <p class="eyebrow">Metodo</p>
-        <h2>Una metodologia in undici fasi, resa più leggibile per il web</h2>
+        <h2>Rendere leggibile per il web</h2>
         <p>
-          La struttura originale è completa, ma rischia di essere troppo lineare. Nel sito conviene raggruppare le fasi in quattro blocchi: esplorazione, modellazione, generazione assistita e validazione.
+          In questo sito, pensiamo di raggruppare l'informazione in quattro blocchi: esplorazione, modellazione, generazione assistita e validazione.
         </p>
       </div>
 
@@ -135,17 +173,17 @@
         <article class="method-card">
           <span>01</span>
           <h3>Esplorazione</h3>
-          <p>Scelta dell'opera, interrogazione di ArCo, confronto dei candidati e recupero delle informazioni già strutturate.</p>
+          <p>Scelta dell'opera, interrogazione di ArCo e DBpedia, confronto dei candidati e recupero delle informazioni già strutturate.</p>
         </article>
         <article class="method-card">
           <span>02</span>
           <h3>Modellazione</h3>
-          <p>Separazione tra bene culturale, soggetto rappresentato e contesto storico-iconografico.</p>
+          <p>Separazione e ricerca degli elementi iconografici della descrizione, del soggetto rappresentato e del contesto storico-iconografico.</p>
         </article>
         <article class="method-card">
           <span>03</span>
           <h3>Prompting</h3>
-          <p>Uso degli LLM per proporre entità, triple e possibili collegamenti, senza considerarli fonti finali.</p>
+          <p>Uso degli LLM per proporre entità, triple e possibili collegamenti per l'arricchimento.</p>
         </article>
         <article class="method-card">
           <span>04</span>
@@ -153,17 +191,465 @@
           <p>Controllo delle triple tramite ArCo, Catalogo Generale, DBpedia e fonti autorevoli.</p>
         </article>
       </div>
+    </section>
 
-      <div class="critique-panel">
-        <h3>Nota critica</h3>
+    <section class="section" id="sparql">
+      <div class="section-intro">
+        <p class="eyebrow">Fase 1A · Esplorazione SPARQL</p>
+        <h2>Dal repertorio ArCo alla scelta dell'opera e ai ponti DBpedia</h2>
         <p>
-          La metodologia è solida perché evita di identificare l'opera con la persona raffigurata. Il punto da rafforzare è la valutazione: dato che il gruppo ha cinque membri, servono almeno tre modelli linguistici e una griglia comparativa più esplicita, con criteri misurabili per accettare o scartare le triple.
+          La fase esplorativa documenta il passaggio da una ricerca ampia nel Knowledge Graph ArCo alla selezione della risorsa 1800179488. Dopo la scelta dell'opera, la ricerca prosegue in DBpedia per verificare quali elementi iconografici, biografici e teologici possono diventare collegamenti esterni affidabili.
         </p>
+      </div>
+
+      <div class="exploration-flow" aria-label="Passaggi dell'esplorazione SPARQL">
+        <article class="exploration-step">
+          <div class="step-marker" aria-hidden="true">01</div>
+          <div class="step-body">
+            <div class="step-head">
+              <h3>Ricerca generale di dipinti in ArCo</h3>
+              <span class="result-badge">200 risultati · LIMIT raggiunto</span>
+            </div>
+            <p>
+              La prima query serve a capire quali tipi di risorse pittoriche sono presenti in ArCo. Non si cerca ancora San Tommaso d'Aquino: si parte da una classe ampia, <code>arco:HistoricOrArtisticProperty</code>, filtrando i beni il cui <code>dc:type</code> contiene la parola "dipinto".
+            </p>
+            <p>
+              Il risultato conferma che ArCo contiene molti beni pittorici, inclusi dipinti, dipinti murali e opere isolate.
+            </p>
+            <details class="query-details">
+              <summary>Mostra query</summary>
+              <article class="code-block exploration-code">
+                <div class="code-title">
+                  <h4>Query 1</h4>
+                  <div class="code-actions">
+                    <button class="endpoint-button" type="button" data-endpoint="https://dati.cultura.gov.it/sparql" data-query="sparql-query-1">Apri endpoint</button>
+                    <button class="explain-button" type="button" data-explain="query-explain-1" aria-expanded="false">Spiega query</button>
+                    <button class="copy-button" type="button" data-copy="sparql-query-1">Copia</button>
+                  </div>
+                </div>
+                <pre><code id="sparql-query-1">PREFIX arco: &lt;https://w3id.org/arco/ontology/arco/&gt;
+PREFIX dc: &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+SELECT DISTINCT ?opera ?label ?type
+WHERE {
+  ?opera a arco:HistoricOrArtisticProperty ;
+         dc:type ?type ;
+         rdfs:label ?label .
+  FILTER(REGEX(STR(?type), "dipinto", "i"))
+}
+ORDER BY ?label
+LIMIT 200</code></pre>
+                <div class="query-explanation" id="query-explain-1" hidden>
+                  <h5>Perché è costruita così</h5>
+                  <p>I prefissi riducono la lunghezza degli URI e rendono leggibile la query, anziché scrivere: <code>https://w3id.org/arco/ontology/arco/HistoricOrArtisticProperty</code>, possiamo scrivere <code>arco:HistoricOrArtisticProperty</code>. Questa classe delimita la ricerca ai beni culturali storico-artistici, mentre <code>dc:type</code> e <code>rdfs:label</code> recuperano tipologia e denominazione dell'opera.</p>
+                  <p>Il filtro <code>FILTER(REGEX(...))</code> permette di selezionare le opere la cui tipologia contiene la parola <code>"dipinto"</code>, anche quando il valore di <code>?type</code> non coincide esattamente con questa parola. Per esempio, può intercettare valori come <code>"dipinto"</code>, <code>"dipinto murale"</code> o <code>"soffitto dipinto"</code> (come i risultati ch abbiamo trovato). <code>DISTINCT</code> evita duplicati, <code>ORDER BY</code> ordina i risultati e <code>LIMIT</code> mantiene la ricerca esplorativa controllabile. La <code>"i"</code> serve a rendere la ricerca non sensibile alle maiuscole/minuscole.</p>
+                </div>
+              </article>
+            </details>
+          </div>
+        </article>
+
+        <article class="exploration-step">
+          <div class="step-marker" aria-hidden="true">02</div>
+          <div class="step-body">
+            <div class="step-head">
+              <h3>Ricerca di dipinti legati a San Tommaso d'Aquino</h3>
+              <span class="result-badge">100 risultati · candidati con immagine</span>
+            </div>
+            <p>
+              A questo punto abbiamo parlato sull'idea di orientare la ricerca verso una figura storico-intellettuale. San Tommaso d'Aquino appare un candidato adatto perché permette di sperimentare un arricchimento non limitato alla descrizione di primo livello dell'opera, ma esteso al contenuto rappresentato: la persona raffigurata, il suo profilo filosofico-religioso e, in un secondo momento, gli elementi iconografici che costruiscono la scena del dipinto che abbiamo scelto alla fine.
+            </p>
+            <p>
+              Dopo aver verificato la presenza di dipinti, si restringe la ricerca ai beni il cui label contiene "d'Aquino" o "Aquino". In questa fase non si recupera ancora la descrizione: l'obiettivo è individuare un primo insieme di candidati pertinenti e dotati di immagine.
+            </p>
+            <p>
+              Il filtro su "Aquino" evita di includere altri santi chiamati Tommaso, come San Tommaso apostolo o San Tommaso da Villanova, e concentra la ricerca sulla figura storico-intellettuale scelta.
+            </p>
+            <details class="query-details">
+              <summary>Mostra query</summary>
+              <article class="code-block exploration-code">
+                <div class="code-title">
+                  <h4>Query 2</h4>
+                  <div class="code-actions">
+                    <button class="endpoint-button" type="button" data-endpoint="https://dati.cultura.gov.it/sparql" data-query="sparql-query-2">Apri endpoint</button>
+                    <button class="explain-button" type="button" data-explain="query-explain-2" aria-expanded="false">Spiega query</button>
+                    <button class="copy-button" type="button" data-copy="sparql-query-2">Copia</button>
+                  </div>
+                </div>
+                <pre><code id="sparql-query-2">PREFIX arco: &lt;https://w3id.org/arco/ontology/arco/&gt;
+PREFIX dc: &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+
+SELECT DISTINCT ?opera ?label ?image
+WHERE {
+  ?opera a arco:HistoricOrArtisticProperty ;
+         dc:type ?type ;
+         rdfs:label ?label ;
+         foaf:depiction ?image .
+  FILTER(REGEX(STR(?type), "dipinto", "i"))
+  FILTER(REGEX(STR(?label), "d'Aquino|Aquino", "i"))
+}
+ORDER BY DESC(?label)
+LIMIT 100</code></pre>
+                <div class="query-explanation" id="query-explain-2" hidden>
+                  <h5>Perché è costruita così</h5>
+                  <p>La query mantiene il filtro sui dipinti e aggiunge una ricerca testuale sul <code>rdfs:label</code>, perché in questa fase si vuole trovare un primo insieme di opere legate ad Aquino direttamente nella denominazione catalografica.</p>
+                  <p><code>foaf:depiction</code> è richiesto, non opzionale: in questo modo i candidati devono avere un'immagine collegata. Questa scelta è coerente con il progetto, perché l'arricchimento riguarda una pittura e richiede di osservare anche il contenuto visivo dell'opera.</p>
+                  <p>Il filtro <code>FILTER(REGEX(STR(?label), "d'Aquino|Aquino", "i"))</code> viene scelto per non includere genericamente tutti i risultati con "San Tommaso". In questo modo si evitano altri santi omonimi e si concentra la ricerca su Tommaso d'Aquino. La descrizione viene lasciata alle query successive, dove serve per confrontare e scegliere il candidato finale.</p>
+                  <p><code>ORDER BY DESC(?label)</code> ordina i risultati in senso inverso rispetto all'alfabeto. La scelta rende più leggibile questa fase esplorativa perché porta più in alto molte denominazioni che contengono formulazioni come "San Tommaso d'Aquino", invece di lasciare in apertura solo titoli che iniziano con altre parole. Il limite a <code>100</code> conserva un insieme ampio ma ancora leggibile di candidati.</p>
+                </div>
+              </article>
+            </details>
+          </div>
+        </article>
+
+        <article class="exploration-step">
+          <div class="step-marker" aria-hidden="true">03</div>
+          <div class="step-body">
+            <div class="step-head">
+              <h3>Lettura delle descrizioni dei candidati</h3>
+              <span class="result-badge">selezione del candidato 1800179488</span>
+            </div>
+            <p>
+              A partire dai 100 candidati con immagine individuati nella query precedente, il punto di interesse diventa la descrizione: la pittura contiene commenti extra o elementi iconografici abbastanza ricchi da sostenere un arricchimento semantico?
+            </p>
+            <p>
+              Cerchiamo quindi dipinti con una descrizione testuale, perché questa è la base più prudente per proporre nuove relazioni senza inventare informazioni non presenti nella scheda. Nel risultato emergono molti casi poco utili per il nostro scopo: più di quaranta descrizioni indicano solo "dipinto", tre riportano "n.p." e circa dieci si limitano a elencare i personaggi presenti.
+            </p>
+            <p>
+              Per questo ci siamo concentrati su circa quindici opere con una descrizione moderatamente più ampia, capace di far capire meglio la scena dall'esterno. Tra queste abbiamo scelto il dipinto attribuito a Pisani perché ci convinceva anche esteticamente e conservava un buon equilibrio tra dati già disponibili e possibilità di arricchimento: la descrizione esplicita abito domenicano, sole, libro, atto di scrivere, calice e ostia.
+            </p>
+            <details class="query-details">
+              <summary>Mostra query</summary>
+              <article class="code-block exploration-code">
+                <div class="code-title">
+                  <h4>Query 3</h4>
+                  <div class="code-actions">
+                    <button class="endpoint-button" type="button" data-endpoint="https://dati.cultura.gov.it/sparql" data-query="sparql-query-3">Apri endpoint</button>
+                    <button class="explain-button" type="button" data-explain="query-explain-3" aria-expanded="false">Spiega query</button>
+                    <button class="copy-button" type="button" data-copy="sparql-query-3">Copia</button>
+                  </div>
+                </div>
+<pre><code id="sparql-query-3">PREFIX arco: &lt;https://w3id.org/arco/ontology/arco/&gt;
+PREFIX dc: &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+
+SELECT DISTINCT ?opera ?description
+WHERE {
+  {
+    SELECT DISTINCT ?opera ?label
+    WHERE {
+      ?opera a arco:HistoricOrArtisticProperty ;
+             dc:type ?type ;
+             rdfs:label ?label ;
+             foaf:depiction ?image .
+      FILTER(REGEX(STR(?type), "dipinto", "i"))
+      FILTER(REGEX(STR(?label), "d'Aquino|Aquino", "i"))
+    }
+    ORDER BY DESC(?label)
+    LIMIT 100
+  }
+  ?opera dc:description ?description .
+}
+ORDER BY ?opera ?description</code></pre>
+                <div class="query-explanation" id="query-explain-3" hidden>
+                  <h5>Perché è costruita così</h5>
+                  <p>La query usa una sottoquery per conservare lo stesso insieme esplorativo della query precedente: i primi 100 dipinti legati ad Aquino e dotati di immagine. In questo modo il passaggio non cambia corpus, ma cambia domanda di lettura.</p>
+                  <p>Fuori dalla sottoquery viene richiesto <code>dc:description</code>: qui la descrizione non è più accessoria, ma diventa il criterio per capire quali opere offrono elementi iconografici o commenti utili all'arricchimento. Per questo l'output mostra <code>?opera</code> e <code>?description</code>, non più label e immagine.</p>
+                  <p>La lettura dei risultati serve anche a scartare descrizioni troppo povere, come quelle che indicano solo "dipinto", "n.p." o un semplice elenco di personaggi. Il gruppo ha quindi selezionato manualmente un sottoinsieme di circa quindici descrizioni più informative prima di scegliere l'opera di Pisani.</p>
+                </div>
+              </article>
+            </details>
+          </div>
+        </article>
+
+        <article class="exploration-step">
+          <div class="step-marker" aria-hidden="true">04</div>
+          <div class="step-body">
+            <div class="step-head">
+              <h3>Confronto controllato: autore e soggetto</h3>
+              <span class="result-badge">25 risultati · Pisani e San Tommaso</span>
+            </div>
+            <p>
+              Dopo aver individuato il candidato, l'esplorazione si sposta sul contesto autoriale: non basta cercare il cognome nel titolo, ma bisogna recuperare solo le opere in cui Venanzio Pisani compare come autore o attribuzione esplicita.
+            </p>
+            <p>
+              <code>UNION</code> viene usato per mettere in relazione due insiemi limitati: alcune opere attribuite a Venanzio Pisani e alcuni dipinti dedicati a San Tommaso d'Aquino. In questo modo il confronto resta controllato e non produce un elenco eccessivo di risultati.</p>
+            <details class="query-details">
+              <summary>Mostra query</summary>
+              <article class="code-block exploration-code">
+                <div class="code-title">
+                  <h4>Query 4</h4>
+                  <div class="code-actions">
+                    <button class="endpoint-button" type="button" data-endpoint="https://dati.cultura.gov.it/sparql" data-query="sparql-query-4">Apri endpoint</button>
+                    <button class="explain-button" type="button" data-explain="query-explain-4" aria-expanded="false">Spiega query</button>
+                    <button class="copy-button" type="button" data-copy="sparql-query-4">Copia</button>
+                  </div>
+                </div>
+                <pre><code id="sparql-query-4">PREFIX arco: &lt;https://w3id.org/arco/ontology/arco/&gt;
+PREFIX dc: &lt;http://purl.org/dc/elements/1.1/&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX a-cd: &lt;https://w3id.org/arco/ontology/context-description/&gt;
+
+SELECT DISTINCT ?criterio ?opera ?label ?date
+WHERE {
+  {
+    SELECT DISTINCT ("opere attribuite a Pisani" AS ?criterio) ?opera ?label
+    WHERE {
+      ?opera a arco:HistoricOrArtisticProperty ;
+             rdfs:label ?label ;
+             a-cd:hasAuthor ?author .
+      ?author rdfs:label ?authorLabel .
+      FILTER(REGEX(STR(?authorLabel), "Pisani Venanzio", "i"))
+    }
+    ORDER BY ?label
+    LIMIT 15
+  }
+  UNION
+  {
+    SELECT DISTINCT ("dipinti di San Tommaso d'Aquino" AS ?criterio) ?opera ?label
+    WHERE {
+      ?opera a arco:HistoricOrArtisticProperty ;
+             dc:type ?type ;
+             rdfs:label ?label .
+      FILTER(REGEX(STR(?type), "dipinto", "i"))
+      FILTER(REGEX(STR(?label), "San Tommaso d.Aquino|San Tommaso d'Aquino", "i"))
+    }
+    ORDER BY DESC(?label)
+    LIMIT 10
+  }
+
+  OPTIONAL { ?opera dc:date ?date . }
+}
+ORDER BY ?criterio ?label
+LIMIT 30</code></pre>
+                <div class="query-explanation" id="query-explain-4" hidden>
+                  <h5>Perché è costruita così</h5>
+                  <p>La prima parte della query individua opere collegate a Venanzio Pisani tramite la proprietà catalografica <code>a-cd:hasAuthor</code>. La seconda parte cerca dipinti il cui label rimanda esplicitamente a San Tommaso d'Aquino, così il confronto resta legato ai due assi del caso di studio: autore attribuito e soggetto iconografico.</p>
+                  <p>Le espressioni <code>("opere attribuite a Pisani" AS ?criterio)</code> e <code>("dipinti di San Tommaso d'Aquino" AS ?criterio)</code> creano una colonna artificiale nei risultati. Questa colonna non proviene da ArCo: serve a indicare da quale ramo del <code>UNION</code> arriva ogni riga, rendendo più leggibile il confronto.</p>
+                  <p>L'<code>OPTIONAL</code> su <code>dc:date</code> aggiunge, quando disponibile, una lettura cronologica senza escludere le opere prive di datazione.</p>
+                </div>
+              </article>
+            </details>
+          </div>
+        </article>
+
+        <article class="exploration-step">
+          <div class="step-marker" aria-hidden="true">05</div>
+          <div class="step-body">
+            <div class="step-head">
+              <h3>Scelta dell'opera</h3>
+              <span class="result-badge">scelta metodologica · senza query</span>
+            </div>
+            <p>
+              Tra i candidati viene selezionata l'opera <strong>San Tommaso d'Aquino, San Tommaso d'Aquino</strong>, identificata come dipinto e opera isolata.
+            </p>
+            <p>
+              La scelta è motivata perché la risorsa è chiaramente identificata, ha un soggetto rilevante per il progetto, contiene una descrizione iconografica ricca, conserva informazioni storiche estese, è collegata a un'immagine e permette un arricchimento tramite DBpedia o, se necessario, una piccola estensione RDF locale.
+            </p>
+            <p class="selected-uri">
+              URI: <a href="https://w3id.org/arco/resource/HistoricOrArtisticProperty/1800179488" target="_blank" rel="noreferrer">https://w3id.org/arco/resource/HistoricOrArtisticProperty/1800179488</a>
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <div class="section-intro exploration-subintro">
+        <p class="eyebrow">Fase 1b · Esplorazione DBpedia</p>
+        <h2>Dalle entità candidate ai collegamenti esterni</h2>
+        <p>
+          Una volta selezionata l'opera, DBpedia viene usata per controllare quali elementi del contenuto pittorico possono essere collegati a risorse esterne. Il controllo distingue tra collegamenti forti, ponti concettuali e informazioni che restano da modellare localmente.
+        </p>
+      </div>
+
+      <div class="exploration-flow dbpedia-flow" aria-label="Passaggi dell'esplorazione DBpedia">
+        <article class="exploration-step">
+          <div class="step-marker" aria-hidden="true">D1</div>
+          <div class="step-body">
+            <div class="step-head">
+              <h3>Assenza di dati DBpedia su Venanzio Pisani</h3>
+              <span class="result-badge">nessuna risorsa trovata</span>
+            </div>
+            <p>
+              La prima verifica riguarda l'autore attribuito. DBpedia non restituisce una risorsa biografica per Venanzio Pisani, né cercando la forma "Venanzio Pisani" né la forma catalografica "Pisani Venanzio", anche senza dipendere da etichette italiane.
+            </p>
+            <p>
+              Questo esito viene registrato come risultato della ricerca: per Pisani non proponiamo un collegamento esterno a DBpedia. Le informazioni disponibili sull'autore restano quindi quelle documentate da ArCo, in particolare tramite <code>a-cd:historicalInformation</code> nella scheda dell'opera.
+            </p>
+            <details class="query-details">
+              <summary>Mostra query</summary>
+              <article class="code-block exploration-code">
+                <div class="code-title">
+                  <h4>DBpedia Query 1</h4>
+                  <div class="code-actions">
+                    <button class="endpoint-button" type="button" data-endpoint="https://dbpedia.org/sparql" data-query="dbpedia-query-pisani">Apri endpoint</button>
+                    <button class="explain-button" type="button" data-explain="dbpedia-explain-pisani" aria-expanded="false">Spiega query</button>
+                    <button class="copy-button" type="button" data-copy="dbpedia-query-pisani">Copia</button>
+                  </div>
+                </div>
+                <pre><code id="dbpedia-query-pisani">PREFIX dbo: &lt;http://dbpedia.org/ontology/&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+SELECT DISTINCT ?artista ?nome ?biografia ?dataNascita ?dataMorte ?luogoNascita
+WHERE {
+  ?artista a dbo:Artist ;
+           rdfs:label ?nome .
+
+  FILTER(REGEX(STR(?nome), "Venanzio Pisani|Pisani Venanzio", "i"))
+
+  OPTIONAL { ?artista dbo:abstract ?biografia . FILTER(LANG(?biografia) = "en") }
+  OPTIONAL { ?artista dbo:birthDate ?dataNascita . }
+  OPTIONAL { ?artista dbo:deathDate ?dataMorte . }
+  OPTIONAL {
+    ?artista dbo:birthPlace ?luogo .
+    ?luogo rdfs:label ?luogoNascita .
+    FILTER(LANG(?luogoNascita) = "en")
+  }
+}
+ORDER BY ?dataNascita
+LIMIT 5</code></pre>
+                <div class="query-explanation" id="dbpedia-explain-pisani" hidden>
+                  <h5>Perché è costruita così</h5>
+                  <p>La query cerca una risorsa di tipo <code>dbo:Artist</code> con un'etichetta compatibile con le due forme del nome: <code>Venanzio Pisani</code> e <code>Pisani Venanzio</code>. Gli <code>OPTIONAL</code> tentano di recuperare dati biografici in inglese senza renderli obbligatori.</p>
+                  <p>Il risultato vuoto viene riportato come evidenza negativa: DBpedia non offre un punto di collegamento stabile per l'autore. In questo caso è più corretto conservare Pisani come informazione proveniente da ArCo, invece di creare un collegamento esterno non verificato.</p>
+                </div>
+              </article>
+            </details>
+          </div>
+        </article>
+
+        <article class="exploration-step">
+          <div class="step-marker" aria-hidden="true">D2</div>
+          <div class="step-body">
+            <div class="step-head">
+              <h3>Allineamento delle entità candidate</h3>
+              <span class="result-badge">11 candidati con risorsa</span>
+            </div>
+            <p>
+              La seconda query controlla le entità candidate emerse dalla descrizione dell'opera: San Tommaso, abito domenicano, libro, scrittoio, raggio di sole, calice, ostia, scrittura ispirata, ispirazione divina, eucaristia e Ordine Domenicano.
+            </p>
+            <p>
+              Alcuni collegamenti sono forti, come <code>dbr:Thomas_Aquinas</code>, <code>dbr:Eucharist</code> e <code>dbr:Dominican_Order</code>. Altri funzionano come ponti concettuali più ampi: per esempio <code>dbr:Book</code> per il libro aperto o <code>dbr:Sunlight</code> per il raggio di sole.
+            </p>
+            <details class="query-details">
+              <summary>Mostra query</summary>
+              <article class="code-block exploration-code">
+                <div class="code-title">
+                  <h4>DBpedia Query 2</h4>
+                  <div class="code-actions">
+                    <button class="endpoint-button" type="button" data-endpoint="https://dbpedia.org/sparql" data-query="dbpedia-query-candidates">Apri endpoint</button>
+                    <button class="explain-button" type="button" data-explain="dbpedia-explain-candidates" aria-expanded="false">Spiega query</button>
+                    <button class="copy-button" type="button" data-copy="dbpedia-query-candidates">Copia</button>
+                  </div>
+                </div>
+                <pre><code id="dbpedia-query-candidates">PREFIX dbr: &lt;http://dbpedia.org/resource/&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+SELECT ?candidato ?risorsa ?label
+WHERE {
+  VALUES (?candidato ?risorsa) {
+    ("gepid:SanTommasoDAquino" dbr:Thomas_Aquinas)
+    ("gepid:AbitoDomenicano" dbr:Dominican_Order)
+    ("gepid:LibroAperto" dbr:Book)
+    ("gepid:Scrittoio" dbr:Desk)
+    ("gepid:RaggioDiSole" dbr:Sunlight)
+    ("gepid:Calice" dbr:Chalice)
+    ("gepid:Ostia" dbr:Sacramental_bread)
+    ("gepid:ScritturaIspirata" dbr:Writing)
+    ("gepid:IspirazioneDivina" dbr:Divine_inspiration)
+    ("gepid:Eucaristia" dbr:Eucharist)
+    ("gepid:OrdineDomenicano" dbr:Dominican_Order)
+  }
+  ?risorsa rdfs:label ?label .
+  FILTER(LANG(?label) = "en")
+}
+ORDER BY ?candidato</code></pre>
+                <div class="query-explanation" id="dbpedia-explain-candidates" hidden>
+                  <h5>Perché è costruita così</h5>
+                  <p><code>VALUES</code> permette di dichiarare esplicitamente la tabella di corrispondenze tra entità locali del progetto e risorse DBpedia candidate. In questo modo la query non cerca genericamente nel grafo, ma verifica una lista controllata di ponti semantici.</p>
+                  <p>La query usa direttamente le etichette inglesi di DBpedia. In questa fase non è necessario cercare anche le label italiane: l'obiettivo è verificare l'esistenza di un ponte esterno stabile per ciascuna entità candidata.</p>
+                </div>
+              </article>
+            </details>
+          </div>
+        </article>
+
+        <article class="exploration-step">
+          <div class="step-marker" aria-hidden="true">D3</div>
+          <div class="step-body">
+            <div class="step-head">
+              <h3>Profilo DBpedia di Tommaso d'Aquino</h3>
+              <span class="result-badge">dati biografici e titoli</span>
+            </div>
+            <p>
+              Poiché il nostro arricchimento non riguarda solo gli oggetti raffigurati ma anche la persona rappresentata, la risorsa <code>dbr:Thomas_Aquinas</code> è il collegamento DBpedia più importante.
+            </p>
+            <p>
+              La query recupera dati utili per descrivere il soggetto rappresentato: label e descrizione in inglese, luoghi di nascita e morte, anni, titolo di Dottore della Chiesa e immagine.
+            </p>
+            <details class="query-details">
+              <summary>Mostra query</summary>
+              <article class="code-block exploration-code">
+                <div class="code-title">
+                  <h4>DBpedia Query 3</h4>
+                  <div class="code-actions">
+                    <button class="endpoint-button" type="button" data-endpoint="https://dbpedia.org/sparql" data-query="dbpedia-query-thomas">Apri endpoint</button>
+                    <button class="explain-button" type="button" data-explain="dbpedia-explain-thomas" aria-expanded="false">Spiega query</button>
+                    <button class="copy-button" type="button" data-copy="dbpedia-query-thomas">Copia</button>
+                  </div>
+                </div>
+                <pre><code id="dbpedia-query-thomas">PREFIX dbr: &lt;http://dbpedia.org/resource/&gt;
+PREFIX dbo: &lt;http://dbpedia.org/ontology/&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+SELECT DISTINCT ?property ?value ?valueLabel
+WHERE {
+  VALUES ?property {
+    rdfs:label dbo:description dbo:birthPlace dbo:deathPlace
+    dbo:birthYear dbo:deathYear dbo:title dbo:thumbnail
+  }
+  dbr:Thomas_Aquinas ?property ?value .
+  OPTIONAL {
+    ?value rdfs:label ?valueLabel .
+    FILTER(LANG(?valueLabel) = "en")
+  }
+  FILTER(!isLiteral(?value) || LANG(?value) = "en" || LANG(?value) = "")
+}
+ORDER BY ?property ?value
+LIMIT 60</code></pre>
+                <div class="query-explanation" id="dbpedia-explain-thomas" hidden>
+                  <h5>Perché è costruita così</h5>
+                  <p>La query parte da una risorsa DBpedia precisa, <code>dbr:Thomas_Aquinas</code>, e usa <code>VALUES</code> per limitare l'analisi alle proprietà più pertinenti per il progetto.</p>
+                  <p>Gli <code>OPTIONAL</code> sulle label dei valori rendono più leggibili i luoghi collegati. Il filtro mantiene solo i valori testuali in inglese, sufficienti per usare DBpedia come ponte esterno. Questi dati aiutano a modellare San Tommaso come soggetto storico, religioso e intellettuale rappresentato nel dipinto.</p>
+                </div>
+              </article>
+            </details>
+          </div>
+        </article>
+
+        <article class="exploration-step">
+          <div class="step-marker" aria-hidden="true">D4</div>
+          <div class="step-body">
+            <div class="step-head">
+              <h3>Decisione di modellazione</h3>
+              <span class="result-badge">DBpedia + entità locali</span>
+            </div>
+            <p>
+              DBpedia viene usata come ponte esterno per le entità più stabili: <code>dbr:Thomas_Aquinas</code>, <code>dbr:Dominican_Order</code>, <code>dbr:Eucharist</code>, <code>dbr:Chalice</code> e <code>dbr:Sacramental_bread</code>.
+            </p>
+            <p>
+              Gli elementi più situati nella scena, come <code>gepid:LibroAperto</code>, <code>gepid:Scrittoio</code>, <code>gepid:RaggioDiSole</code> e <code>gepid:ScritturaIspirata</code>, restano entità locali del progetto con eventuali collegamenti cauti a DBpedia. Questo evita di confondere l'oggetto iconografico specifico del dipinto con un concetto generale.
+            </p>
+          </div>
+        </article>
       </div>
     </section>
 
-    <section class="section split" id="kg">
-      <div>
+    <section class="section" id="kg">
+      <div class="section-intro">
         <p class="eyebrow">Grafi della conoscenza</p>
         <h2>ArCo come base, DBpedia come collegamento esterno</h2>
       </div>
@@ -180,61 +666,8 @@
       </div>
     </section>
 
-    <section class="section" id="sparql">
-      <div class="section-heading compact">
-        <p class="eyebrow">Esplorazione SPARQL</p>
-        <h2>Query documentate e verificabili</h2>
-      </div>
-
-      <div class="code-grid">
-        <article class="code-block">
-          <div class="code-title">
-            <h3>ArCo: triple dirette dell'opera</h3>
-            <button class="copy-button" type="button" data-copy="arco-query">Copia</button>
-          </div>
-          <pre><code id="arco-query">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
-
-SELECT DISTINCT ?p ?o ?oLabel
-WHERE {
-  &lt;https://w3id.org/arco/resource/HistoricOrArtisticProperty/1800179488&gt; ?p ?o .
-  OPTIONAL { ?o rdfs:label ?oLabel . }
-}
-ORDER BY ?p ?o
-LIMIT 120</code></pre>
-        </article>
-
-        <article class="code-block">
-          <div class="code-title">
-            <h3>DBpedia: profilo di Tommaso</h3>
-            <button class="copy-button" type="button" data-copy="dbpedia-query">Copia</button>
-          </div>
-          <pre><code id="dbpedia-query">PREFIX dbr: &lt;http://dbpedia.org/resource/&gt;
-PREFIX dbo: &lt;http://dbpedia.org/ontology/&gt;
-PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
-PREFIX dct: &lt;http://purl.org/dc/terms/&gt;
-
-SELECT DISTINCT ?property ?value
-WHERE {
-  dbr:Thomas_Aquinas ?property ?value .
-  FILTER(?property IN (
-    rdfs:label,
-    dbo:birthPlace,
-    dbo:deathPlace,
-    dbo:birthYear,
-    dbo:deathYear,
-    dbo:description,
-    dct:subject
-  ))
-  FILTER(!isLiteral(?value) || LANG(?value) = "" || LANG(?value) = "en")
-}
-ORDER BY ?property ?value
-LIMIT 80</code></pre>
-        </article>
-      </div>
-    </section>
-
-    <section class="section split" id="gap">
-      <div>
+    <section class="section" id="gap">
+      <div class="section-intro">
         <p class="eyebrow">Analisi del gap</p>
         <h2>Dal testo libero alle relazioni esplicite</h2>
       </div>
@@ -342,8 +775,8 @@ ex:ThomasAquinasSubject
       </article>
     </section>
 
-    <section class="section split" id="verifica">
-      <div>
+    <section class="section" id="verifica">
+      <div class="section-intro">
         <p class="eyebrow">Verifica</p>
         <h2>Ogni tripla deve avere una motivazione</h2>
       </div>
@@ -367,7 +800,7 @@ ex:ThomasAquinasSubject
       </div>
     </section>
 
-    <section class="section final-section" id="discussione">
+    <section class="section" id="discussione">
       <div class="section-heading">
         <p class="eyebrow">Discussione e prossimi passi</p>
         <h2>Decisioni ancora aperte</h2>

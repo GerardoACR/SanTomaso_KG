@@ -58,3 +58,26 @@ document.querySelectorAll("[data-copy]").forEach((button) => {
     }
   });
 });
+
+document.querySelectorAll("[data-endpoint][data-query]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const code = document.getElementById(button.dataset.query);
+    if (!code) return;
+
+    const endpointUrl = new URL(button.dataset.endpoint);
+    endpointUrl.searchParams.set("query", code.textContent.trim());
+    window.open(endpointUrl.toString(), "_blank", "noopener");
+  });
+});
+
+document.querySelectorAll("[data-explain]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const explanation = document.getElementById(button.dataset.explain);
+    if (!explanation) return;
+
+    const isHidden = explanation.hidden;
+    explanation.hidden = !isHidden;
+    button.setAttribute("aria-expanded", String(isHidden));
+    button.textContent = isHidden ? "Nascondi spiegazione" : "Spiega query";
+  });
+});
