@@ -827,11 +827,11 @@ LIMIT 100</code></pre>
           <div class="prompt-case-header">
             <div>
               <h3>Casi d'uso</h3>
-              <p>Confronto sintetico delle risposte prodotte dai tre modelli per uno stesso compito di arricchimento.</p>
+              <p>Confronto sintetico delle risposte disponibili per ciascun compito di arricchimento.</p>
             </div>
             <div class="prompt-case-controls" aria-label="Navigazione casi d'uso">
               <button type="button" data-carousel-prev aria-label="Caso precedente">‹</button>
-              <span data-case-status>1 / 3</span>
+              <span data-case-status>1 / 4</span>
               <button type="button" data-carousel-next aria-label="Caso successivo">›</button>
             </div>
           </div>
@@ -2528,6 +2528,339 @@ ex:ProduzioneTeologicaTommaso
                     </ol>
                     <p>Il rischio principale sarebbe trasformare l’arricchimento semantico in una sovrainterpretazione. Il grafo deve evitare frasi come “il libro &#232; la <em>Summa</em>” o “il raggio &#232; certamente un intervento divino”. La forma corretta &#232; pi&#249; prudente: <strong>il libro rimanda alla produzione teologica</strong>, <strong>il raggio &#232; interpretabile come ispirazione divina</strong>, <strong>calice e ostia rimandano all’Eucaristia</strong>, <strong>l’abito domenicano richiama l’identit&#224; religiosa del santo</strong>.</p>
                     <p>Quindi il grafo finale deve essere ibrido: documentale, iconografico, concettuale e critico. La qualit&#224; non sta nel collegare tutto a DBpedia, ma nel distinguere bene tra ci&#242; che &#232; visto, ci&#242; che &#232; documentato, ci&#242; che &#232; interpretato e ci&#242; che &#232; solo contestuale.</p>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="prompt-case" id="prompt-caso-4" data-case-index="3" hidden>
+            <p class="case-label">Caso 4</p>
+            <h4>Prompt finale per costruire il Knowledge Graph RDF</h4>
+            <p class="case-objective">
+              <strong>Obiettivo:</strong> generare il modello RDF/Turtle finale dell'arricchimento semantico, consolidando dati ArCo/Catalogo, ponti DBpedia e modellazione locale.
+            </p>
+            <article class="code-block prompt-code">
+              <div class="code-title">
+                <h4>Prompt Caso 4</h4>
+                <div class="code-actions">
+                  <button class="copy-button" type="button" data-copy="prompt-caso-4-code">Copia</button>
+                </div>
+              </div>
+              <pre><code id="prompt-caso-4-code">Agisci come esperto di RDF, Knowledge Graph, beni culturali, ArCo/Catalogo generale dei Beni Culturali e riconciliazione controllata con DBpedia.
+
+Obiettivo:
+Costruire il Knowledge Graph RDF finale per l’arricchimento semantico del dipinto “San Tommaso d’Aquino”, attribuito a Venanzio Pisani, distinguendo tra:
+1. dati documentali ArCo/Catalogo;
+2. elementi iconografici visibili;
+3. interpretazioni religiose, filosofiche e teologiche caute;
+4. collegamenti esterni verso DBpedia;
+5. modellazione locale con namespace `ex:`.
+
+Prima di rispondere:
+- Considera attentamente i file allegati con le risposte dei modelli precedenti, in particolare DeepSeek-V3 Instant e GPT-5.5 Thinking.
+- Genera tu il modello RDF finale da zero, ma in modo controllato.
+Risorsa primaria ArCo/Catalogo:
+- Risorsa ArCo: https://w3id.org/arco/resource/HistoricOrArtisticProperty/1800179488
+- Catalogo generale dei Beni Culturali: https://catalogo.beniculturali.it/
+- Numero catalogo: 1800179488
+La descrizione ufficiale si trova nella risorsa ArCo/Catalogo. Usala come fonte primaria e non sostituirla con interpretazioni esterne.
+Descrizione catalografica da rispettare:
+“San Tommaso &#232; raffigurato in abito da Domenicano con una catena con ciondolo a forma di sole sul petto; di fianco a uno scrittoio, il santo tiene con la mano sinistra un libro aperto, mentre con la destra sta per scrivere, ispirato da un raggio di sole che lo illumina proveniente dalla visione di un calice con l’ostia.”
+Link DBpedia candidati:
+- Thomas Aquinas: http://dbpedia.org/resource/Thomas_Aquinas
+- Dominican Order: http://dbpedia.org/resource/Dominican_Order
+- Chalice: http://dbpedia.org/resource/Chalice
+- Sacramental bread: http://dbpedia.org/resource/Sacramental_bread
+- Eucharist: http://dbpedia.org/resource/Eucharist
+- Real presence of Christ in the Eucharist: http://dbpedia.org/resource/Real_presence_of_Christ_in_the_Eucharist
+- Scholasticism: http://dbpedia.org/resource/Scholasticism
+- Thomism: http://dbpedia.org/resource/Thomism
+- Summa Theologica: http://dbpedia.org/resource/Summa_Theologica
+Knowledge gap:
+Il KG di partenza (ArCo) contiene una descrizione testuale ricca, ma non rende interrogabili come nodi autonomi elementi come libro aperto, scrittoio, calice, ostia, iscrizione IHS, ciondolo solare e raggio di sole. Il grafo finale deve quindi trasformare questi elementi in entit&#224; locali e collegarle, solo quando appropriato, a concetti generali DBpedia.
+Regole di modellazione:
+- Accetta il ponte DBpedia per il soggetto rappresentato: `dbr:Thomas_Aquinas`.
+- Modella localmente gli oggetti specifici del dipinto: `ex:libroApertoSanTommaso`, `ex:scrittoioSanTommaso`, `ex:caliceVisione`, `ex:ostiaVisione`, `ex:ciondoloSoleSanTommaso`, `ex:raggioDiSoleSanTommaso`.
+- Collega gli oggetti religiosi visibili a DBpedia solo come ponte generale: `dbr:Chalice`, `dbr:Sacramental_bread`, `dbr:Eucharist`, `dbr:Real_presence_of_Christ_in_the_Eucharist`.
+- Usa DBpedia per il contesto del soggetto, non come elemento visibile: `dbr:Dominican_Order`, `dbr:Scholasticism`, `dbr:Thomism`.
+- Mantieni locali le interpretazioni della scena: `ex:visioneEucaristicaRappresentata`, `ex:ispirazioneDivinaRappresentata`.
+- Non identificare il libro aperto con `dbr:Summa_Theologica`; collegalo come contesto intellettuale di Tommaso, non come oggetto raffigurato.
+- Non forzare DBpedia per Pisani Venanzio se non esiste una risorsa stabile e affidabile.
+- Non usare `owl:sameAs`, salvo equivalenza forte e giustificata.
+- Usa `schema:about`, `skos:closeMatch` o `skos:relatedMatch` per collegamenti concettuali.
+- Preferisci un grafo pi&#249; povero ma corretto a un grafo ricco ma sovrainterpretato.
+Produci:
+1. Sintesi breve del knowledge gap.
+2. Modello RDF/Turtle finale.
+Usa almeno questi prefissi:
+@prefix ex: &lt;https://example.org/gepid-san-tommaso-pisani/&gt; .
+@prefix arco: &lt;https://w3id.org/arco/ontology/arco/&gt; .
+@prefix a-cd: &lt;https://w3id.org/arco/ontology/context-description/&gt; .
+@prefix dbr: &lt;http://dbpedia.org/resource/&gt; .
+@prefix schema: &lt;https://schema.org/&gt; .
+@prefix skos: &lt;http://www.w3.org/2004/02/skos/core#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+Il Turtle deve includere:
+- dati iconografici-religiosi-filosofici dell’opera;
+- riferimento alla risorsa ArCo;
+- luogo di conservazione;
+- soggetto rappresentato ed elementi simbolici;
+- elementi locali della scena;
+- ponti DBpedia generali;
+- relazioni iconografiche locali.
+3. Tabella di controllo critico:
+Gruppo di triple | Grado di certezza | Motivazione | Rischio interpretativo
+Usa:
+- Alto: dato documentato;
+- Medio: inferenza iconografica prudente;
+- Basso: collegamento contestuale o interpretazione fragile.
+4. Valutazione critica finale:
+- ArCo/Catalogo per i dati documentali;
+- DBpedia per concetti generali e stabili;
+- `ex:` per elementi iconografici specifici;
+- dichiarazione esplicita dell’incertezza interpretativa.
+Non inventare fonti. Non aggiungere elementi non presenti nella descrizione. 
+</code></pre>
+            </article>
+            <div class="model-carousel" data-model-carousel>
+              <div class="model-carousel-viewport">
+                <div class="model-carousel-track">
+                  <article class="model-card is-active" data-model-index="0">
+                    <h3>Risposta di ChatGPT</h3>
+                    
+                    <h4>1. Sintesi breve del knowledge gap</h4>
+                    <p>Il problema principale &#232; che la scheda ArCo/Catalogo contiene una descrizione testuale ricca, ma molti elementi iconografici non sono trasformati in nodi interrogabili: libro aperto, scrittoio, calice, ostia, ciondolo solare, raggio di sole e iscrizione IHS. Il grafo finale arricchisce quindi la risorsa ArCo creando entit&#224; locali <code>ex:</code> per gli elementi specifici del dipinto e usando DBpedia solo come ponte controllato verso concetti generali e stabili.</p>
+                    <h4>2. Modello RDF/Turtle finale</h4>
+                    <pre><code class="language-turtle">@prefix ex: &lt;https://example.org/gepid-san-tommaso-pisani/&gt; .
+@prefix arco: &lt;https://w3id.org/arco/ontology/arco/&gt; .
+@prefix a-cd: &lt;https://w3id.org/arco/ontology/context-description/&gt; .
+@prefix dbr: &lt;http://dbpedia.org/resource/&gt; .
+@prefix schema: &lt;https://schema.org/&gt; .
+@prefix skos: &lt;http://www.w3.org/2004/02/skos/core#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix dc: &lt;http://purl.org/dc/elements/1.1/&gt; .
+
+&lt;https://w3id.org/arco/resource/HistoricOrArtisticProperty/1800179488&gt;
+    a arco:HistoricOrArtisticProperty ;
+    rdfs:label &quot;San Tommaso d&#39;Aquino&quot;@it ;
+    dc:identifier &quot;1800179488&quot; ;
+    dc:type &quot;dipinto&quot;@it ;
+    schema:artMedium &quot;tela/ pittura a olio&quot;@it ;
+    schema:location ex:MuseoDiocesanoEDelCodex ;
+    schema:creator ex:VenanzioPisani ;
+    ex:attributionStatus &quot;attribuito&quot;@it ;
+    a-cd:subjectDescription &quot;San Tommaso &#232; raffigurato in abito da Domenicano con una catena con ciondolo a forma di sole sul petto; di fianco a uno scrittoio, il santo tiene con la mano sinistra un libro aperto, mentre con la destra sta per scrivere, ispirato da un raggio di sole che lo illumina proveniente dalla visione di un calice con l’ostia.&quot;@it ;
+    a-cd:hasSubject ex:soggettoSanTommaso ;
+    ex:hasIconographicElement
+        ex:abitoDomenicanoSanTommaso ,
+        ex:ciondoloSoleSanTommaso ,
+        ex:scrittoioSanTommaso ,
+        ex:libroApertoSanTommaso ,
+        ex:raggioDiSoleSanTommaso ,
+        ex:caliceVisione ,
+        ex:ostiaVisione ,
+        ex:iscrizioneIHSOstia ;
+    schema:about
+        ex:visioneEucaristicaRappresentata ,
+        ex:ispirazioneDivinaRappresentata ,
+        ex:contestoIntellettualeTomista .
+
+ex:MuseoDiocesanoEDelCodex
+    a schema:Museum ;
+    rdfs:label &quot;Museo Diocesano e del Codex&quot;@it ;
+    schema:address &quot;Via Arcivescovado, 5, Corigliano-Rossano (CS)&quot;@it .
+
+ex:VenanzioPisani
+    a schema:Person ;
+    rdfs:label &quot;Venanzio Pisani&quot;@it ;
+    ex:dbpediaReconciliationStatus &quot;nessun collegamento DBpedia forzato&quot;@it .
+
+ex:soggettoSanTommaso
+    a a-cd:Subject ;
+    rdfs:label &quot;San Tommaso d&#39;Aquino raffigurato&quot;@it ;
+    skos:closeMatch dbr:Thomas_Aquinas ;
+    schema:affiliation dbr:Dominican_Order ;
+    ex:hasIntellectualContext ex:contestoIntellettualeTomista ;
+    ex:indossa ex:abitoDomenicanoSanTommaso ;
+    ex:portaSulPetto ex:ciondoloSoleSanTommaso ;
+    ex:siTrovaDiFiancoA ex:scrittoioSanTommaso ;
+    ex:tieneConManoSinistra ex:libroApertoSanTommaso ;
+    ex:staPerScrivere ex:attoDiScritturaSanTommaso ;
+    ex:illuminatoDa ex:raggioDiSoleSanTommaso .
+
+ex:abitoDomenicanoSanTommaso
+    a ex:ElementoIconograficoVisibile ;
+    rdfs:label &quot;abito da Domenicano&quot;@it ;
+    ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it ;
+    skos:relatedMatch dbr:Dominican_Order .
+
+ex:ciondoloSoleSanTommaso
+    a ex:ElementoIconograficoVisibile , ex:ElementoSimbolico ;
+    rdfs:label &quot;catena con ciondolo a forma di sole sul petto&quot;@it ;
+    ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it ;
+    ex:posizione &quot;sul petto del santo&quot;@it ;
+    ex:puoContribuireA ex:ispirazioneDivinaRappresentata .
+
+ex:scrittoioSanTommaso
+    a ex:ElementoIconograficoVisibile , ex:ArredoRappresentato ;
+    rdfs:label &quot;scrittoio&quot;@it ;
+    ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it .
+
+ex:libroApertoSanTommaso
+    a ex:ElementoIconograficoVisibile , ex:OggettoRappresentato ;
+    rdfs:label &quot;libro aperto&quot;@it ;
+    ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it ;
+    ex:notaCritica &quot;Non identificato con la Summa Theologica; il collegamento a Summa Theologica resta solo nel contesto intellettuale di Tommaso.&quot;@it .
+
+ex:attoDiScritturaSanTommaso
+    a ex:AzioneRappresentata ;
+    rdfs:label &quot;atto di scrivere&quot;@it ;
+    ex:agent ex:soggettoSanTommaso ;
+    ex:strumentoContesto ex:libroApertoSanTommaso , ex:scrittoioSanTommaso ;
+    ex:ispiratoDa ex:raggioDiSoleSanTommaso .
+
+ex:raggioDiSoleSanTommaso
+    a ex:ElementoIconograficoVisibile , ex:ElementoSimbolico ;
+    rdfs:label &quot;raggio di sole che illumina San Tommaso&quot;@it ;
+    ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it ;
+    ex:illumina ex:soggettoSanTommaso ;
+    ex:provieneDa ex:visioneEucaristicaRappresentata ;
+    ex:puoRappresentare ex:ispirazioneDivinaRappresentata .
+
+ex:visioneEucaristicaRappresentata
+    a ex:InterpretazioneIconograficaPrudente ;
+    rdfs:label &quot;visione eucaristica rappresentata&quot;@it ;
+    ex:gradoInterpretativo &quot;medio&quot;@it ;
+    ex:fondataSuElementoVisibile ex:caliceVisione , ex:ostiaVisione , ex:raggioDiSoleSanTommaso ;
+    skos:relatedMatch dbr:Eucharist , dbr:Real_presence_of_Christ_in_the_Eucharist .
+
+ex:ispirazioneDivinaRappresentata
+    a ex:InterpretazioneIconograficaPrudente ;
+    rdfs:label &quot;ispirazione divina rappresentata&quot;@it ;
+    ex:gradoInterpretativo &quot;medio&quot;@it ;
+    ex:fondataSuElementoVisibile ex:raggioDiSoleSanTommaso , ex:ciondoloSoleSanTommaso ;
+    skos:relatedMatch dbr:Eucharist .
+
+ex:caliceVisione
+    a ex:ElementoIconograficoVisibile , ex:OggettoReligiosoRappresentato ;
+    rdfs:label &quot;calice nella visione&quot;@it ;
+    ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it ;
+    ex:parteDi ex:visioneEucaristicaRappresentata ;
+    ex:associatoA ex:ostiaVisione ;
+    skos:closeMatch dbr:Chalice ;
+    skos:relatedMatch dbr:Eucharist .
+
+ex:ostiaVisione
+    a ex:ElementoIconograficoVisibile , ex:OggettoReligiosoRappresentato ;
+    rdfs:label &quot;ostia nella visione&quot;@it ;
+    ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it ;
+    ex:parteDi ex:visioneEucaristicaRappresentata ;
+    ex:associataA ex:caliceVisione ;
+    ex:portaIscrizione ex:iscrizioneIHSOstia ;
+    skos:closeMatch dbr:Sacramental_bread ;
+    skos:relatedMatch dbr:Eucharist , dbr:Real_presence_of_Christ_in_the_Eucharist .
+
+ex:iscrizioneIHSOstia
+    a ex:IscrizioneDocumentata ;
+    rdfs:label &quot;IHS&quot;@it ;
+    ex:testoIscrizione &quot;IHS&quot; ;
+    ex:collocazione &quot;sull&#39;ostia&quot;@it ;
+    ex:tecnicaIscrizione &quot;capitale, a pennello, latino&quot;@it ;
+    ex:parteDi ex:ostiaVisione .
+
+ex:contestoIntellettualeTomista
+    a ex:ContestoFilosoficoTeologico ;
+    rdfs:label &quot;contesto filosofico-teologico di Tommaso d&#39;Aquino&quot;@it ;
+    ex:nonElementoVisibile true ;
+    skos:relatedMatch dbr:Scholasticism , dbr:Thomism , dbr:Summa_Theologica .</code></pre>
+                    <h4>3. Tabella di controllo critico</h4>
+                    <div class="table-wrap">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Gruppo di triple</th>
+                            <th>Grado di certezza</th>
+                            <th>Motivazione</th>
+                            <th>Rischio interpretativo</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Titolo, tipologia, numero catalogo, tecnica, localizzazione</td>
+                            <td>Alto</td>
+                            <td>Dati presenti nella scheda Catalogo/ArCo.</td>
+                            <td>Basso. Sono dati documentali.</td>
+                          </tr>
+                          <tr>
+                            <td>Descrizione catalografica con <code>a-cd:subjectDescription</code></td>
+                            <td>Alto</td>
+                            <td>Riprende la descrizione ufficiale senza modificarla.</td>
+                            <td>Basso.</td>
+                          </tr>
+                          <tr>
+                            <td><code>a-cd:hasSubject ex:soggettoSanTommaso</code> + <code>skos:closeMatch dbr:Thomas_Aquinas</code></td>
+                            <td>Alto</td>
+                            <td>Il soggetto rappresentato &#232; esplicitamente San Tommaso d’Aquino.</td>
+                            <td>Basso. Non si usa <code>owl:sameAs</code>.</td>
+                          </tr>
+                          <tr>
+                            <td>Abito domenicano + relazione a <code>dbr:Dominican_Order</code></td>
+                            <td>Medio</td>
+                            <td>L’abito &#232; visibile/documentato; il collegamento all’Ordine Domenicano &#232; concettuale.</td>
+                            <td>Medio-basso. Non va letto come “oggetto visibile DBpedia”, ma come ponte di contesto.</td>
+                          </tr>
+                          <tr>
+                            <td>Libro aperto, scrittoio, ciondolo, raggio, calice, ostia</td>
+                            <td>Alto</td>
+                            <td>Sono elementi presenti nella descrizione catalografica.</td>
+                            <td>Basso.</td>
+                          </tr>
+                          <tr>
+                            <td>Iscrizione IHS sull’ostia</td>
+                            <td>Alto</td>
+                            <td>&#200; indicata nella scheda Catalogo come iscrizione documentata.</td>
+                            <td>Basso.</td>
+                          </tr>
+                          <tr>
+                            <td><code>ex:visioneEucaristicaRappresentata</code></td>
+                            <td>Medio</td>
+                            <td>Fondata su calice + ostia + raggio proveniente dalla visione.</td>
+                            <td>Medio. &#200; una lettura iconografica prudente.</td>
+                          </tr>
+                          <tr>
+                            <td><code>ex:ispirazioneDivinaRappresentata</code></td>
+                            <td>Medio</td>
+                            <td>La descrizione usa “ispirato da un raggio di sole”.</td>
+                            <td>Medio. “Divina” &#232; interpretazione teologica, non dato puramente fisico.</td>
+                          </tr>
+                          <tr>
+                            <td>Collegamenti a <code>dbr:Eucharist</code> e <code>dbr:Real_presence_of_Christ_in_the_Eucharist</code></td>
+                            <td>Medio-basso</td>
+                            <td>Pertinenti per calice/ostia/visione eucaristica, ma non equivalenti agli oggetti locali.</td>
+                            <td>Medio. Servono come ponti concettuali, non identificazioni.</td>
+                          </tr>
+                          <tr>
+                            <td>Collegamenti a <code>dbr:Scholasticism</code>, <code>dbr:Thomism</code>, <code>dbr:Summa_Theologica</code></td>
+                            <td>Basso</td>
+                            <td>Contesto intellettuale di Tommaso, non elemento visibile nel dipinto.</td>
+                            <td>Alto se usati come elementi raffigurati. Per questo restano solo <code>skos:relatedMatch</code>.</td>
+                          </tr>
+                          <tr>
+                            <td>Venanzio Pisani locale, senza DBpedia</td>
+                            <td>Medio</td>
+                            <td>Il prompt parla di attribuzione a Pisani; non si forza una riconciliazione DBpedia.</td>
+                            <td>Medio. La propriet&#224; resta locale e cauta.</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <h4>4. Valutazione critica finale</h4>
+                    <p>Il modello &#232; corretto porque evita el error m&#225;s com&#250;n: convertir cada elemento religioso en una equivalencia fuerte con DBpedia. Aqu&#237; <strong>ArCo/Catalogo</strong> queda como base documental; <strong>DBpedia</strong> se usa solo para conceptos generales y relativamente estables; y <code>ex:</code> mantiene los elementos espec&#237;ficos de la escena.</p>
+                    <p>La decisi&#243;n m&#225;s importante es no usar <code>owl:sameAs</code>. <code>ex:caliceVisione</code> no es “el c&#225;liz” en abstracto, sino <strong>ese c&#225;liz representado en esa pintura</strong>. Lo mismo vale para <code>ex:ostiaVisione</code>, <code>ex:raggioDiSoleSanTommaso</code> y <code>ex:libroApertoSanTommaso</code>.</p>
+                    <p>Tambi&#233;n es correcto no identificar el libro abierto con <code>dbr:Summa_Theologica</code>. Eso ser&#237;a una sobreinterpretaci&#243;n: Tom&#225;s de Aquino remite filos&#243;ficamente a la escol&#225;stica, al tomismo y a la <em>Summa Theologica</em>, pero el objeto visible de la pintura sigue siendo solo un libro abierto.</p>
+                    <p>[1]: https://catalogo.beniculturali.it/detail/HistoricOrArtisticProperty/1800179488 &quot;San Tommaso d&#39;Aquino San Tommaso d&#39;Aquino dipinto&quot;</p>
+                    <p>[2]: https://w3id.org/arco/ontology/context-description?utm_source=chatgpt.com &quot;Context Description Ontology (ArCo network)&quot;</p>
+                  
                   </article>
                 </div>
               </div>
