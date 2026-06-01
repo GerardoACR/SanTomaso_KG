@@ -26,8 +26,8 @@
       <a href="#sparql">Esplorazione</a>
       <a href="#gap">Gap</a>
       <a href="#prompting">Prompting</a>
+      <a href="#confronto-llm">Confronto</a>
       <a href="#rdf">RDF</a>
-      <a href="#verifica">Verifica</a>
       <a href="#discussione">Discussione</a>
     </nav>
   </header>
@@ -176,7 +176,7 @@
         </article>
         <article class="method-card">
           <span>02</span>
-          <h3>Modellazione</h3>
+          <h3>Gap e Modellazione</h3>
           <p>Separazione e ricerca degli elementi iconografici della descrizione, del soggetto rappresentato e del contesto storico-iconografico.</p>
         </article>
         <article class="method-card">
@@ -666,8 +666,8 @@ LIMIT 100</code></pre>
               <span class="result-badge">D2 + D3 + Caso 3</span>
             </div>
             <p>
-              D4 combina tre controlli: D2 mostra quali elementi iconografici hanno possibili ponti DBpedia, D3 valida <code>dbr:Thomas_Aquinas</code> come nodo centrale, e il <a href="#prompt-caso-3">Caso 3</a> aiuta a distinguere tra collegamenti accettabili, riformulazioni possibili e modellazione locale. Dunque, gli oggetti specifici del dipinto restano locali, ma i concetti religiosi, filosofic e biografici generali verificabili possono essere collegati a DBpedia.
-            </p><p></p>
+              D4 combina tre controlli: D2 mostra quali elementi iconografici hanno possibili ponti DBpedia, D3 valida <code>dbr:Thomas_Aquinas</code> come nodo centrale, e il <a href="#prompt-caso-3">Caso 3</a> aiuta a distinguere tra collegamenti accettabili, riformulazioni possibili e modellazione locale. Dunque, gli oggetti specifici del dipinto restano locali, ma i concetti religiosi, filosofici e biografici generali verificabili possono essere collegati a DBpedia.
+            </p>
             <div class="table-wrap">
               <table>
                 <thead>
@@ -723,12 +723,12 @@ LIMIT 100</code></pre>
 
     <section class="section" id="gap">
       <div class="section-intro">
-        <p class="eyebrow">Fase 2 · Modellazione</p>
+        <p class="eyebrow">Fase 2 · Gap e Modellazione</p>
         <h2>Knowledge gap: dal testo libero alle relazioni interrogabili</h2>
         <p>
           Il gap non consiste semplicemente nella mancanza di link esterni. ArCo descrive l'opera in modo ricco, ma molti elementi iconografici, religiosi e simbolici restano nel testo libero e non diventano nodi o relazioni direttamente interrogabili. La modellazione proposta nasce quindi dal passaggio tra la <a href="#oggetto">descrizione dell'opera del sito di ArCo</a>, le <a href="#prompting">proposte dei LLM</a>, la <a href="#sparql">verifica SPARQL/DBpedia</a> e il successivo <a href="#rdf">arricchimento RDF</a>.
         </p>
-      </div><p></p>
+      </div>
 
       <article class="enrichment-note">
         <h3>Gap generale</h3>
@@ -737,7 +737,6 @@ LIMIT 100</code></pre>
         </p>
       </article>
 
-      <p></p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -776,12 +775,11 @@ LIMIT 100</code></pre>
           </tbody>
         </table>
       </div>
-      <p></p>
     </section>
 
     <section class="section" id="prompting">
       <div class="section-heading">
-        <p class="eyebrow">Prompting</p>
+        <p class="eyebrow">Fase 3A · Prompting</p>
         <h2>Documentazione degli interventi dei LLM</h2>
         <p>
           In questa sezione presentiamo il metodo utilizzato per confrontare diversi modelli linguistici attraverso tecniche di prompting. Il confronto non valuta solo la qualità delle risposte, ma anche il comportamento dei modelli in condizioni operative diverse.
@@ -1441,7 +1439,7 @@ Modella localmente con namespace `ex:` gli elementi che DBpedia non rappresenta 
 9. Classifica come "Scartato / Incerto" le interpretazioni non verificabili.
 Non affermare come dato certo ciò che non è documentato. Se una relazione è plausibile ma interpretativa, dichiarala come locale, cauta o incerta.
 
-10. Produci una matrice D4 di decisione con questa tabella:
+10. Produci una matrice di decisione con questa tabella:
 
 Elemento | Tipo | Livello di evidenza | Collegamento o namespace | Decisione | Motivo
 
@@ -1522,49 +1520,49 @@ Rispondi seguendo l'ordine dei punti. Usa uno stile chiaro, descrittivo e critic
                             <td><strong>Abito Domenicano</strong></td>
                             <td>Identit&#224; dell&#39;ordine di appartenenza</td>
                             <td>Attributo iconografico</td>
-                            <td><code>ex:hasHabit</code> $\rightarrow$ <code>dbr:Dominican_Order</code></td>
+                            <td><code>ex:hasHabit</code> → <code>dbr:Dominican_Order</code></td>
                           </tr>
                           <tr>
                             <td><strong>Ciondolo a forma di sole</strong></td>
                             <td>Simbolo della sapienza/identit&#224; del santo</td>
                             <td>Oggetto materiale / Segno</td>
-                            <td><code>ex:hasAttribute</code> $\int$ <code>ex:SunSymbol</code></td>
+                            <td><code>ex:hasAttribute</code> → <code>ex:SunSymbol</code></td>
                           </tr>
                           <tr>
                             <td><strong>Libro aperto</strong></td>
                             <td>Studio e dottrina</td>
                             <td>Oggetto materiale</td>
-                            <td><code>ex:depicts</code> $\rightarrow$ <code>ex:OpenBook</code></td>
+                            <td><code>ex:depicts</code> → <code>ex:OpenBook</code></td>
                           </tr>
                           <tr>
                             <td><strong>Scrittoio</strong></td>
                             <td>Contesto di lavoro intellettuale</td>
                             <td>Elemento compositivo</td>
-                            <td><code>ex:placedNear</code> $\rightarrow$ <code>ex:Desk</code></td>
+                            <td><code>ex:placedNear</code> → <code>ex:Desk</code></td>
                           </tr>
                           <tr>
                             <td><strong>Gesto della scrittura</strong></td>
                             <td>Atto di codificazione del pensiero</td>
                             <td>Elemento compositivo / Azione</td>
-                            <td><code>ex:performingAction</code> $\rightarrow$ <code>ex:Writing</code></td>
+                            <td><code>ex:performingAction</code> → <code>ex:Writing</code></td>
                           </tr>
                           <tr>
                             <td><strong>Calice e Ostia</strong></td>
                             <td>Presenza eucaristica</td>
                             <td>Segno religioso</td>
-                            <td><code>ex:depicts</code> $\rightarrow$ <code>ex:EucharisticElement</code></td>
+                            <td><code>ex:depicts</code> → <code>ex:EucharisticElement</code></td>
                           </tr>
                           <tr>
                             <td><strong>Iscrizione &quot;IHS&quot;</strong></td>
                             <td>Identificazione del nome di Ges&#249;</td>
                             <td>Segno religioso / Epigrafia</td>
-                            <td><code>ex:hasInscription</code> $\rightarrow$ <code>&quot;IHS&quot;</code></td>
+                            <td><code>ex:hasInscription</code> → <code>&quot;IHS&quot;</code></td>
                           </tr>
                           <tr>
                             <td><strong>Raggio di sole</strong></td>
                             <td>Sorgente dell&#39;ispirazione</td>
                             <td>Elemento compositivo</td>
-                            <td><code>ex:illuminatedBy</code> $\rightarrow$ <code>ex:LightRay</code></td>
+                            <td><code>ex:illuminatedBy</code> → <code>ex:LightRay</code></td>
                           </tr>
                         </tbody>
                       </table>
@@ -1572,18 +1570,18 @@ Rispondi seguendo l'ordine dei punti. Usa uno stile chiaro, descrittivo e critic
                     <h4>5. Analisi dei concetti religiosi, filosofici e teologici (Interpretazioni)</h4>
                     <p>Il passaggio dal visibile al concetto deve essere mediato da una logica di &quot;inferenza prudente&quot;:</p>
                     <ul>
-                      <li><strong>Calice + Ostia $\rightarrow$ Eucaristia:</strong> L&#39;unione degli oggetti visibili permette di modellare il concetto di <code>Eucharist</code>, ma l&#39;evento specifico &#232; una <em>visione</em>.</li>
-                      <li>azione <strong>Raggio di sole $\rightarrow$ Ispirazione divina:</strong> Non si pu&#242; affermare che il raggio <em>sia</em> Dio, ma che iconograficamente rappresenta l&#39;<em>ispirazione</em>.</li>
-                      <li><strong>Libro aperto + Scrittura $\rightarrow$ Attivit&#224; dottrinale:</strong> Il libro non &#232; necessariamente la <em>Summa</em>, ma &#232; un elemento che rimanda alla produzione teologica del soggetto.</li>
-                      <li><strong>Abito domenicano $\rightarrow$ Appartenenza:</strong> L&#39;abito &#232; il segno visivo che abilita il link con l&#39;ordine religioso.</li>
+                      <li><strong>Calice + Ostia → Eucaristia:</strong> L&#39;unione degli oggetti visibili permette di modellare il concetto di <code>Eucharist</code>, ma l&#39;evento specifico &#232; una <em>visione</em>.</li>
+                      <li>azione <strong>Raggio di sole → Ispirazione divina:</strong> Non si pu&#242; affermare che il raggio <em>sia</em> Dio, ma che iconograficamente rappresenta l&#39;<em>ispirazione</em>.</li>
+                      <li><strong>Libro aperto + Scrittura → Attivit&#224; dottrinale:</strong> Il libro non &#232; necessariamente la <em>Summa</em>, ma &#232; un elemento che rimanda alla produzione teologica del soggetto.</li>
+                      <li><strong>Abito domenicano → Appartenenza:</strong> L&#39;abito &#232; il segno visivo che abilita il link con l&#39;ordine religioso.</li>
                     </ul>
                     <h4>6 e 7. Classificazione dei collegamenti (Accettato vs Modificato)</h4>
                     <ul>
                       <li><strong>Accettato (Link forte):</strong> <code>dbr:Thomas_Aquinas</code>, <code>dbr:Dominican_Order</code>, <code>dbr:Eucharist</code>.</li>
                       <li><strong>Modificato (Link con mediazione):</strong></li>
-                      <li><code>ex:LibroAperto</code> $\xrightarrow{skos:closeMatch}$ <code>dbr:Summa_Theologica</code> (Il libro <em>rimanda</em> all&#39;opera, non &#232; l&#39;opera stessa).</li>
-                      <li><code>ex:RaggioLuce</code> $\rightarrow$ interpretato come <code>ex:DivineInspiration</code>.</li>
-                      <li><code>ex:Abito</code> $\rightarrow$ usato per identificare il legame con <code>dbr:Dominican_Order</code>.</li>
+                      <li><code>ex:LibroAperto</code> <code>skos:closeMatch</code> → <code>dbr:Summa_Theologica</code> (Il libro <em>rimanda</em> all&#39;opera, non &#232; l&#39;opera stessa).</li>
+                      <li><code>ex:RaggioLuce</code> → interpretato come <code>ex:DivineInspiration</code>.</li>
+                      <li><code>ex:Abito</code> → usato per identificare il legame con <code>dbr:Dominican_Order</code>.</li>
                     </ul>
                     <h4>8. Classificazione &quot;Locale&quot; (Namespace <code>ex:</code>)</h4>
                     <p>Elementi che appartengono esclusivamente alla specificit&#224; di questo dipinto e non esistono in DBpedia:</p>
@@ -1597,7 +1595,7 @@ Rispondi seguendo l'ordine dei punti. Usa uno stile chiaro, descrittivo e critic
                       <li>Qualsiasi attribuzione di un testo specifico al libro aperto (se non documentata come &quot;Summa&quot;).</li>
                       <li>L&#39;identit&#224; del committente (se non presente nella descrizione).</li>
                     </ul>
-                    <h4>10. Matrice Decisionale D4</h4>
+                    <h4>10. Matrice Decisionale</h4>
                     <div class="table-wrap">
                       <table>
                         <thead>
@@ -1814,9 +1812,9 @@ ex:DipintoSanTommaso ex:hasInscription &quot;IHS&quot; .</code></pre>
                     <p>La catena a sole &#232; un’insegna domenicana storica Non verificabile nei documenti originali</p>
                     <p>Tommaso &#232; ritratto durante la scrittura della Summa Anacronismo iconografico non certo</p>
                     <hr>
-                    <h4>10. Matrice D4 di decisione</h4>
+                    <h4>10. Matrice di decisione</h4>
                     <p>Elemento Tipo Livello di evidenza Collegamento o namespace Decisione Motivo</p>
-                    <p>San Tommaso d’Aquino soggetto rappresentato documentato dbr:Thomas_Aquinas Accettato Identificazione stabile del soggetto</p>
+                    <p>San Tommaso d'Aquino soggetto rappresentato documentato dbr:Thomas_Aquinas Accettato Identificazione stabile del soggetto</p>
                     <p>Abito da Domenicano attributo visibile descritto ex:AbitoDomenicano Locale Oggetto specifico, ma rimanda a dbr:Dominican_Order</p>
                     <p>Ciondolo a forma di sole oggetto simbolico descritto ex:CiondoloSole Locale Non generico in DBpedia</p>
                     <p>Libro aperto oggetto visibile descritto ex:LibroApertoSanTommaso Locale Non identificabile come opera certa</p>
@@ -2105,13 +2103,13 @@ ex:TommasoPersona ex:ispiratoDa ex:VisioneEucaristica .</code></pre>
                     <ul>
                       <li>“Il libro &#232; certamente la <em>Summa Theologiae</em>”.</li>
                       <li>“Il raggio di sole dimostra un intervento divino oggettivo”.</li>
-                      <li>“Il calice e l’ostia rappresentano una specifica visione storica documentata”.</li>
+                      <li>“Il calice e l'ostia rappresentano una specifica visione storica documentata”.</li>
                       <li>“Il ciondolo a sole ha un significato unico e definitivo”.</li>
                       <li>“Il dipinto rappresenta un episodio biografico preciso della vita di Tommaso”.</li>
                     </ul>
                     <p>La scheda parla di “ispirazione” e di “visione del calice e dell’ostia”, quindi la visione eucaristica pu&#242; essere modellata, ma come <strong>rappresentazione iconografica locale</strong>, non come evento storico verificato. (<a href="https://www.catalogo.beniculturali.it/detail/HistoricOrArtisticProperty/1800179488" target="_blank" rel="noreferrer">Catalogo Beni Culturali</a>)</p>
                     <hr>
-                    <h4>10. Matrice D4 di decisione</h4>
+                    <h4>10. Matrice di decisione</h4>
                     <div class="table-wrap">
                       <table>
                         <thead>
@@ -2539,6 +2537,185 @@ ex:ProduzioneTeologicaTommaso
       </div>
     </section>
 
+    <section class="section" id="confronto-llm">
+      <div class="section-heading">
+        <p class="eyebrow">Fase 3B · Confronto dei risultati</p>
+        <h2>Comparazione critica delle risposte dei modelli</h2>
+        <p>
+          Questa sezione confronta il contributo di ciascun modello rispetto all'obiettivo del progetto: trasformare descrizioni e interpretazioni in un arricchimento RDF controllato, distinguendo ponti DBpedia e modellazione locale.
+        </p>
+      </div>
+
+      <div class="content-flow">
+        <div class="prompt-grid">
+          <article>
+            <h3>Gemma-4-26b-a4b</h3>
+            <p>Ha lavorato senza Internet. Il suo contributo principale è stato proporre una lettura iconografica ampia e utile come generatore di ipotesi, ma richiede più verifica esterna.</p>
+          </article>
+          <article>
+            <h3>DeepSeek-V3 Instant</h3>
+            <p>Ha prodotto risposte rapide e operative. La versione Instant è utile, ma tende a sintetizzare la valutazione critica.</p>
+          </article>
+          <article>
+            <h3>GPT-5.5 Thinking</h3>
+            <p>Ha dato le risposte più strutturate e verificabili, soprattutto nel Caso 3. È stato il riferimento principale in questo caso per consolidare D4, il Gap e la bozza RDF.</p>
+          </article>
+        </div>
+
+        <article class="enrichment-note">
+          <h3>Criterio di confronto</h3>
+          <p>
+            Le risposte sono state valutate rispetto a quattro domande: quale elemento unico aggiunge il modello, quanto aiuta a costruire triple, quali rischi introduce e quale parte della modellazione finale viene effettivamente migliorata.
+          </p>
+        </article>
+
+        <div class="prompt-case-carousel comparison-carousel" data-prompt-carousel>
+          <div class="prompt-case-header">
+            <div>
+              <h3>Confronto per caso</h3>
+              <p>Ogni tabella riassume il ruolo dei tre modelli nello stesso prompt, separando apporti, punti forti, limiti e uso finale nel Knowledge Graph.</p>
+            </div>
+            <div class="prompt-case-controls" aria-label="Navigazione confronti per caso">
+              <button type="button" data-carousel-prev aria-label="Confronto precedente">‹</button>
+              <span data-case-status>1 / 3</span>
+              <button type="button" data-carousel-next aria-label="Confronto successivo">›</button>
+            </div>
+          </div>
+
+          <article class="prompt-case is-active" id="confronto-caso-1" data-case-index="0">
+            <p class="case-label">Caso 1 · Zero-shot</p>
+            <h4>Prima descrizione dell'opera</h4>
+            <p class="case-objective">
+              <strong>Funzione nel progetto:</strong> capire quali elementi i modelli riconoscono senza una guida dettagliata e quali rischi emergono quando la descrizione è poco vincolata.
+            </p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Modello</th>
+                    <th>Elemento unico</th>
+                    <th>Punti forti</th>
+                    <th>Limiti</th>
+                    <th>Valutazione critica sintetica</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Gemma-4-26b-a4b</td>
+                    <td>Propone una lettura iconografica generale di San Tommaso, collegando abito, libro, sole, luce e scrittura alla tradizione teologica e scolastica.</td>
+                    <td>Utile come brainstorming: individua simboli modellabili come Ordine Domenicano, scrittura, ispirazione divina, sapienza e rapporto tra fede e ragione.</td>
+                    <td>Non analizza il dipinto specifico: introduce elementi non documentati come la colomba, mette in dubbio Pisani, forza il libro come <em>Summa</em> e trascura il calice con ostia.</td>
+                    <td>Serve solo come fase esplorativa: genera ipotesi semantiche da verificare, ma non può essere base diretta per la modellazione RDF finale.</td>
+                  </tr>
+                  <tr>
+                    <td>DeepSeek-V3 Instant</td>
+                    <td>Integra meglio la descrizione specifica del dipinto, soprattutto il rapporto tra raggio di sole, calice, ostia e ispirazione divina.</td>
+                    <td>Utile per trasformare rapidamente gli elementi iconografici in candidati RDF: abito domenicano, libro aperto, scrittoio, ciondolo solare, visione eucaristica e attività di scrittura.</td>
+                    <td>Tende inoltre a presentare come certi alcuni collegamenti interpretativi, ma comunque è abbastanza buono per uno Zero-shot.</td>
+                    <td>Risposta più operativa di Gemma: aderisce meglio alla descrizione e recupera il calice con ostia, ma richiede controllo esterno.</td>
+                  </tr>
+                  <tr>
+                    <td>GPT-5.5 Thinking</td>
+                    <td>Distingue meglio il dipinto specifico, integrando dati catalografici, elementi visibili, significato iconografico e contesto storico, come DeepSeek; questo è probabilmente dovuto all'aiuto della ricerca Internet.</td>
+                    <td>Molto utile per la modellazione RDF: identifica entità e relazioni come San Tommaso, Ordine Domenicano, libro aperto, scrittoio, sole, calice, ostia, IHS, ispirazione divina e committenza ecclesiastica.</td>
+                    <td>Resta ancora discorsivo: non separa sempre in modo formale dato documentale, elemento visibile e interpretazione. Anche questo richiede controllo prima di entrare nel grafo.</td>
+                    <td>È una risposta abbastanza solida, anche se non è ancora quella che utilizzeremo per la parte finale.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="prompt-case" id="confronto-caso-2" data-case-index="1" hidden>
+            <p class="case-label">Caso 2 · Few-shot</p>
+            <h4>Elementi da arricchire semanticamente</h4>
+            <p class="case-objective">
+              <strong>Funzione nel progetto:</strong> trasformare la descrizione in una lista di elementi iconografici, religiosi, filosofici e storico-culturali da verificare in DBpedia o modellare localmente.
+            </p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Modello</th>
+                    <th>Elemento unico</th>
+                    <th>Punti forti</th>
+                    <th>Limiti</th>
+                    <th>Valutazione critica sintetica</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Gemma-4-26b-a4b</td>
+                    <td>Risponde bene al prompt: separa elementi iconografici, religiosi, filosofici e storico-culturali, orientandoli già verso possibili nodi e relazioni del Knowledge Graph.</td>
+                    <td>Molto utile per il passaggio descrizione → modellazione: propone entità come Ordine Domenicano, Sol Ecclesiae, Eucaristia, Ispirazione Divina, Grazia, Scrittura e San Tommaso come nodo biografico esterno.</td>
+                    <td>Introduce alcune inferenze non controllate: identifica il libro con la <em>Summa Theologiae</em>, collega lo scrittoio a scriptorium/studio monastico per esempio.</td>
+                    <td>Risposta forte come schema preliminare per il KG: aiuta a trovare candidati semantici e relazioni, ma va ripulita separando descrizione ufficiale e interpretazione del modello.</td>
+                  </tr>
+                  <tr>
+                    <td>DeepSeek-V3 Instant</td>
+                    <td>Produce una struttura già vicina al KG, con classi, entità e relazioni esplicite tra San Tommaso, abito domenicano, libro, scrittoio, raggio, calice, ostia e visione eucaristica.</td>
+                    <td>Molto utile sul piano operativo: traduce la descrizione in possibili triple e propone relazioni come <em>indossa_abito</em>, <em>possiede_attributo</em>, <em>compie_azione</em>, <em>include_oggetti</em> e <em>la_visione_motiva_la_scrittura</em>.</td>
+                    <td>Forza molte interpretazioni esterne: Regola di sant'Agostino, Lux Veritatis, <em>Summa Theologiae</em>, Pseudo-Dionigi.</td>
+                    <td>Risposta molto buona per progettare relazioni RDF, ma troppo espansiva: va usata come bozza tecnica da filtrare.</td>
+                  </tr>
+                  <tr>
+                    <td>GPT-5.5 Thinking</td>
+                    <td>Organizza la descrizione in elementi direttamente modellabili, distinguendo oggetti visibili, simboli religiosi, concetti teologico-filosofici e livelli del Knowledge Graph.</td>
+                    <td>Molto utile per la modellazione RDF: propone entità e relazioni come <em>San Tommaso</em>, <em>Ordine Domenicano</em>, <em>sole</em>, <em>libro aperto</em>, <em>scrittura</em>, <em>visione</em>, <em>calice</em>, <em>ostia</em>, <em>Eucaristia</em> e <em>ispirazione divina</em>.</td>
+                    <td>Resta in parte generico: duplica alcuni elementi come ciondolo/sole, suggerisce la <em>Summa Theologiae</em> senza base certa.</td>
+                    <td>Risposta solida per il consolidamento del KG: aiuta a passare dalla descrizione a una struttura semantica ordinata, ma richiede normalizzazione delle relazioni e separazione esplicita tra dato visibile, interpretazione teologica e collegamento esterno.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="prompt-case" id="confronto-caso-3" data-case-index="2" hidden>
+            <p class="case-label">Caso 3 · Analisi per fasi</p>
+            <h4>Decisioni di modellazione per D3, D4 e RDF</h4>
+            <p class="case-objective">
+              <strong>Funzione nel progetto:</strong> usare una traccia più guidata per separare dati documentali, collegamenti DBpedia, interpretazioni caute, modellazione locale e triple candidate.
+            </p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Modello</th>
+                    <th>Elemento unico</th>
+                    <th>Punti forti</th>
+                    <th>Limiti</th>
+                    <th>Valutazione critica sintetica</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Gemma-4-26b-a4b</td>
+                    <td>Distingue livelli di evidenza, modellazione locale, matrice decisionale e prime triple Turtle.</td>
+                    <td>Molto utile per consolidare la struttura RDF: separa elementi visibili, concetti interpretativi ed entità esterne, usando correttamente <em>dbr:</em> per concetti stabili ed <em>ex:</em> per elementi specifici del dipinto.</td>
+                    <td>Alcune decisioni restano troppo forti: l'abito domenicano viene trattato come “prova” di appartenenza, calice e ostia sono collegati direttamente a <em>dbr:Eucharist</em>, e il libro mantiene un rimando rischioso alla <em>Summa Theologiae</em>.</td>
+                    <td>È notevole che non ha accesso a internet, ma comunque è riuscito a capire la codifica di DBpedia, la migliore risposta di Gemma per la fase finale: fornisce una buona bozza che ci ha aiutato per la parte D4 della fase di splorazione e RDF, ma va corretta rendendo più cauti i link interpretativi e distinguendo meglio oggetto visibile, concetto teologico e relazione locale.</td>
+                  </tr>
+                  <tr>
+                    <td>DeepSeek-V3 Instant</td>
+                    <td>Produce una risposta molto aderente al prompt: distingue visibile, interpretativo, DBpedia, locale, modificato e incerto, arrivando fino a la matrice e triple Turtle.</td>
+                    <td>Molto forte per la modellazione operativa: propone namespace <em>ex:</em>, collegamenti <em>dbr:</em>, livelli di certezza e relazioni caute come <em>interpretatoCome</em>, <em>associatedWith</em> e <em>VisioneEucaristica</em> locale.</td>
+                    <td>Alcune triple sono tecnicamente deboli o troppo assertive.</td>
+                    <td>È una risposta molto utile per la bozza RDF finale: migliore nella cautela rispetto a DeepSeek precedente.</td>
+                  </tr>
+                  <tr>
+                    <td>GPT-5.5 Thinking</td>
+                    <td>Consolida il modello più completo: distingue dati catalografici, elementi visibili, interpretazioni caute, collegamenti DBpedia, namespace locale, matrice e triple RDF.</td>
+                    <td>Molto forte per la versione finale: mantiene la cautela su <em>Summa Theologiae</em>, ispirazione divina e attribuzione a Pisani; modella localmente libro, scrittoio, ciondolo, raggio, ostia, iscrizione IHS e visione eucaristica.</td>
+                    <td>È ancora molto discorsivo e alcune triple richiedono pulizia tecnica: usa direttamente <em>dbr:Thomas_Aquinas</em> per elementi della scena, introduce l'indirizzo del museo e usa proprietà locali non ancora normalizzate.</td>
+                    <td>È la base più solida per il grafo finale: va solo sintetizzata, normalizzata e trasformata in una versione RDF più controllata, mantenendo la distinzione tra dato documentato, elemento visibile, inferenza iconografica e link esterno.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+    </section>
+
     <section class="section" id="rdf">
       <div class="section-heading compact">
         <p class="eyebrow">Arricchimento RDF</p>
@@ -2620,31 +2797,6 @@ ex:LibroApertoSanTommaso
       </article>
     </section>
 
-    <section class="section" id="verifica">
-      <div class="section-intro">
-        <p class="eyebrow">Verifica</p>
-        <h2>Ogni tripla deve avere una motivazione</h2>
-      </div>
-      <div class="status-grid">
-        <article>
-          <strong>Accettata</strong>
-          <p>Coerente con ArCo, Catalogo Generale o DBpedia e utile per il modello.</p>
-        </article>
-        <article>
-          <strong>Modificata</strong>
-          <p>Interessante ma corretta manualmente nel vocabolario o nella direzione della relazione.</p>
-        </article>
-        <article>
-          <strong>Scartata</strong>
-          <p>Non verificabile, troppo interpretativa o frutto di allucinazione del modello.</p>
-        </article>
-        <article>
-          <strong>Incerta</strong>
-          <p>Potenzialmente utile, ma da sostenere con una fonte iconografica più specifica.</p>
-        </article>
-      </div>
-    </section>
-
     <section class="section" id="discussione">
       <div class="section-heading">
         <p class="eyebrow">Discussione e prossimi passi</p>
@@ -2683,5 +2835,3 @@ ex:LibroApertoSanTommaso
   <script src="script.js"></script>
 </body>
 </html>
-
-

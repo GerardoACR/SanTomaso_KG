@@ -91,6 +91,8 @@ pre {
 .site-nav {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
   gap: 4px;
 }
 
@@ -377,6 +379,7 @@ h3 {
 
 .section > .section-intro + .content-flow,
 .section > .section-intro + .exploration-flow,
+.section > .section-intro + .enrichment-note,
 .section > .section-intro + .table-wrap,
 .section > .section-intro + .status-grid {
   max-width: 100%;
@@ -461,6 +464,10 @@ h3 {
 
 .enrichment-note p + p {
   margin-top: 14px;
+}
+
+.enrichment-note + .table-wrap {
+  margin-top: 22px;
 }
 
 .section-heading {
@@ -565,6 +572,10 @@ h3 {
 
 .step-body p + p {
   margin-top: 12px;
+}
+
+.step-body > p + .table-wrap {
+  margin-top: 18px;
 }
 
 .selected-uri {
@@ -760,6 +771,10 @@ tr:last-child td {
 
 .prompt-case-carousel {
   padding-top: 10px;
+}
+
+.comparison-carousel .table-wrap {
+  margin-top: 16px;
 }
 
 .prompt-case-header {
