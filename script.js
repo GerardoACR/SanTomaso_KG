@@ -7,12 +7,12 @@ const sections = navLinks
 
 function closeMenu() {
   document.body.classList.remove("nav-open");
-  nav.classList.remove("open");
-  navToggle.setAttribute("aria-expanded", "false");
+  nav?.classList.remove("open");
+  navToggle?.setAttribute("aria-expanded", "false");
 }
 
-navToggle.addEventListener("click", () => {
-  const isOpen = nav.classList.toggle("open");
+navToggle?.addEventListener("click", () => {
+  const isOpen = nav?.classList.toggle("open") || false;
   document.body.classList.toggle("nav-open", isOpen);
   navToggle.setAttribute("aria-expanded", String(isOpen));
 });
@@ -21,25 +21,47 @@ navLinks.forEach((link) => {
   link.addEventListener("click", closeMenu);
 });
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    const visible = entries
-      .filter((entry) => entry.isIntersecting)
-      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+function setActiveNav(sectionId) {
+  navLinks.forEach((link) => {
+    const isActive = link.getAttribute("href") === `#${sectionId}`;
+    link.classList.toggle("active", isActive);
+    if (isActive) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
+}
 
-    if (!visible) return;
+function updateActiveNav() {
+  if (sections.length === 0) return;
 
-    navLinks.forEach((link) => {
-      link.classList.toggle("active", link.getAttribute("href") === `#${visible.target.id}`);
-    });
-  },
-  {
-    rootMargin: "-22% 0px -58% 0px",
-    threshold: [0.18, 0.32, 0.5]
-  }
-);
+  const headerOffset = document.querySelector(".site-header")?.offsetHeight || 0;
+  const activationLine = headerOffset + 48;
+  const currentSection = sections.reduce((active, section) => {
+    const top = section.getBoundingClientRect().top;
+    return top <= activationLine ? section : active;
+  }, sections[0]);
 
-sections.forEach((section) => observer.observe(section));
+  setActiveNav(currentSection.id);
+}
+
+let navFrame = 0;
+
+function requestActiveNavUpdate() {
+  if (navFrame) return;
+
+  navFrame = window.requestAnimationFrame(() => {
+    navFrame = 0;
+    updateActiveNav();
+  });
+}
+
+window.addEventListener("scroll", requestActiveNavUpdate, { passive: true });
+window.addEventListener("resize", requestActiveNavUpdate);
+window.addEventListener("load", updateActiveNav);
+window.addEventListener("hashchange", () => window.setTimeout(updateActiveNav, 120));
+updateActiveNav();
 
 document.querySelectorAll("[data-copy]").forEach((button) => {
   button.addEventListener("click", async () => {

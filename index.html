@@ -27,7 +27,7 @@
       <a href="#gap">Gap</a>
       <a href="#prompting">Prompting</a>
       <a href="#confronto-llm">Confronto</a>
-      <a href="#rdf">RDF</a>
+      <a href="#rdf">Arricchimento</a>
       <a href="#discussione">Discussione</a>
     </nav>
   </header>
@@ -164,7 +164,7 @@
         <p class="eyebrow">Metodo</p>
         <h2>Rendere leggibile per il web</h2>
         <p>
-          In questo sito, pensiamo di raggruppare l'informazione in quattro blocchi: esplorazione, modellazione, generazione assistita e validazione.
+          In questo sito, pensiamo di raggruppare l'informazione in quattro blocchi: esplorazione, modellazione, generazione assistita e arricchimento finale.
         </p>
       </div>
 
@@ -186,8 +186,8 @@
         </article>
         <article class="method-card">
           <span>04</span>
-          <h3>Validazione</h3>
-          <p>Controllo delle triple tramite ArCo, Catalogo Generale, DBpedia e fonti autorevoli.</p>
+          <h3>Arricchimento</h3>
+          <p>Costruzione del Turtle finale a partire da ArCo, Catalogo Generale, DBpedia e modellazione locale.</p>
         </article>
       </div>
     </section>
@@ -3051,8 +3051,8 @@ ex:contestoIntellettualeTomista
 
     <section class="section" id="rdf">
       <div class="section-heading compact">
-        <p class="eyebrow">Arricchimento RDF</p>
-        <h2>Prima bozza delle triple finali</h2>
+        <p class="eyebrow">Fase 4 · Arricchimento</p>
+        <h2>Arricchimento RDF finale</h2>
       </div>
 
       <article class="code-block wide">
@@ -3060,73 +3060,121 @@ ex:contestoIntellettualeTomista
           <h3>Turtle</h3>
           <button class="copy-button" type="button" data-copy="rdf-code">Copia</button>
         </div>
-        <pre><code id="rdf-code">@prefix ex: &lt;https://example.org/gepid/aquinas/&gt; .
+        <pre><code id="rdf-code">@prefix ex: &lt;https://example.org/gepid-san-tommaso-pisani/&gt; .
 @prefix arco: &lt;https://w3id.org/arco/ontology/arco/&gt; .
 @prefix a-cd: &lt;https://w3id.org/arco/ontology/context-description/&gt; .
-@prefix dcterms: &lt;http://purl.org/dc/terms/&gt; .
-@prefix owl: &lt;http://www.w3.org/2002/07/owl#&gt; .
-@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
-@prefix schema: &lt;https://schema.org/&gt; .
-@prefix skos: &lt;http://www.w3.org/2004/02/skos/core#&gt; .
 @prefix dbr: &lt;http://dbpedia.org/resource/&gt; .
+@prefix skos: &lt;http://www.w3.org/2004/02/skos/core#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix dc: &lt;http://purl.org/dc/elements/1.1/&gt; .
 
 &lt;https://w3id.org/arco/resource/HistoricOrArtisticProperty/1800179488&gt;
-    a-cd:hasSubject ex:ThomasAquinasSubject ;
-    dcterms:subject dbr:Thomas_Aquinas ;
-    ex:hasIconographicAttribute ex:AbitoDomenicano ;
-    ex:hasCompositionalElement ex:RaggioDiSoleSanTommaso ;
-    ex:hasDepictedObject ex:LibroApertoSanTommaso ;
-    ex:hasDepictedObject ex:CaliceVisione ;
-    ex:hasDepictedObject ex:OstiaVisione ;
-    ex:depictsScene ex:VisioneEucaristicaRappresentata .
+    a arco:HistoricOrArtisticProperty ;
+    ex:artMedium &quot;tela/ pittura a olio&quot;@it ;
+    ex:location ex:MuseoDiocesanoEDelCodex ;
+    ex:hasIconographicElement
+        ex:abitoDomenicano ,
+        ex:ciondoloSole ,
+        ex:libroAperto ,
+        ex:raggioDiSole ,
+        ex:caliceVisione ,
+        ex:ostiaVisione ,
+        ex:iscrizioneIHSOstia ;
+    ex:about
+        ex:visioneEucaristicaRappresentata ,
+        ex:contestoIntellettualeTomista .
 
-ex:ThomasAquinasSubject
+ex:MuseoDiocesanoEDelCodex
+    a ex:Museum ;
+    rdfs:label &quot;Museo Diocesano e del Codex&quot;@it ;
+    ex:address &quot;Via Arcivescovado, 5, Corigliano-Rossano (CS)&quot;@it .
+
+ex:soggettoInternoDipinto
     a a-cd:Subject ;
-    rdfs:label "San Tommaso d'Aquino come soggetto rappresentato"@it ;
+    rdfs:label &quot;San Tommaso d&#39;Aquino raffigurato&quot;@it ;
     owl:sameAs dbr:Thomas_Aquinas ;
-    ex:associatedWith dbr:Dominican_Order ;
-    ex:associatedWith dbr:Scholasticism ;
-    ex:associatedWith dbr:Thomism .
+    ex:affiliation dbr:Dominican_Order ;
+    ex:hasIntellectualContext ex:contestoIntellettualeTomista ;
+    ex:isWearing ex:abitoDomenicano ,
+                  ex:ciondoloSole ;
+    ex:isHolding ex:libroAperto .
 
-ex:AbitoDomenicano
-    a ex:IconographicAttribute ;
-    rdfs:label "abito domenicano rappresentato"@it ;
-    skos:closeMatch dbr:Dominican_Order .
+ex:abitoDomenicano
+    a ex:ElementoIconograficoVisibile ;
+    rdfs:label &quot;abito da Domenicano&quot;@it ;
+    ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it ;
+    skos:relatedMatch dbr:Dominican_Order .
 
-ex:RaggioDiSoleSanTommaso
-    a ex:CompositionalElement ;
-    rdfs:label "raggio di sole nel dipinto"@it ;
-    ex:interpretedAs ex:IspirazioneDivinaRappresentata .
+ex:ciondoloSole
+    a ex:ElementoIconograficoVisibile , ex:ElementoSimbolico ;
+    rdfs:label &quot;catena con ciondolo a forma di sole sul petto&quot;@it ;
+    ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it ;
+    ex:position &quot;sul petto del santo&quot;@it ;
 
-ex:IspirazioneDivinaRappresentata
-    a ex:InterpretiveConcept ;
-    rdfs:label "ispirazione divina rappresentata iconograficamente"@it ;
-    ex:interpretedFrom ex:RaggioDiSoleSanTommaso .
+ex:libroAperto
+    a ex:ElementoIconograficoVisibile , ex:OggettoRappresentato ;
+    rdfs:label &quot;libro aperto&quot;@it ;
+    ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it ;
+    ex:notaCritica &quot;Non identificato con la Summa Theologica; il collegamento a Summa Theologica resta solo nel contesto intellettuale di Tommaso.&quot;@it .
 
-ex:CaliceVisione
-    a ex:IconographicElement ;
-    rdfs:label "calice rappresentato nella visione eucaristica"@it ;
+ex:raggioDiSole
+    a ex:ElementoIconograficoVisibile , ex:ElementoSimbolico ;
+    rdfs:label &quot;raggio di sole che illumina San Tommaso&quot;@it ;
+    ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it ;
+
+ex:visioneEucaristicaRappresentata
+    a ex:InterpretazioneIconograficaPrudente ;
+    rdfs:label &quot;visione eucaristica rappresentata&quot;@it ;
+    skos:relatedMatch dbr:Eucharist , dbr:Real_presence_of_Christ_in_the_Eucharist .
+
+ex:caliceVisione
+    a ex:ElementoIconograficoVisibile , ex:OggettoReligiosoRappresentato ;
+    rdfs:label &quot;calice nella visione&quot;@it ;
+    ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it ;
+    ex:parteDi ex:visioneEucaristicaRappresentata ;
+    ex:associatoA ex:ostiaVisione ;
     skos:closeMatch dbr:Chalice ;
-    schema:about dbr:Eucharist .
+    skos:relatedMatch dbr:Eucharist .
 
-ex:OstiaVisione
-    a ex:IconographicElement ;
-    rdfs:label "ostia rappresentata nella visione eucaristica"@it ;
+ex:ostiaVisione
+    a ex:ElementoIconograficoVisibile , ex:OggettoReligiosoRappresentato ;
+    rdfs:label &quot;ostia nella visione&quot;@it ;
+    ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it ;
+    ex:parteDi ex:visioneEucaristicaRappresentata ;
+    ex:associataA ex:caliceVisione ;
+    ex:portaIscrizione ex:iscrizioneIHSOstia ;
     skos:closeMatch dbr:Sacramental_bread ;
-    schema:about dbr:Eucharist .
+    skos:relatedMatch dbr:Eucharist , dbr:Real_presence_of_Christ_in_the_Eucharist .
 
-ex:VisioneEucaristicaRappresentata
-    a ex:InterpretiveScene ;
-    rdfs:label "visione eucaristica rappresentata"@it ;
-    ex:includes ex:CaliceVisione ;
-    ex:includes ex:OstiaVisione ;
-    schema:about dbr:Eucharist ;
-    schema:about dbr:Real_presence_of_Christ_in_the_Eucharist .
+ex:iscrizioneIHSOstia
+    a ex:IscrizioneDocumentata ;
+    rdfs:label &quot;IHS&quot;@it ;
+    ex:testoIscrizione &quot;IHS&quot; ;
+    ex:collocazione &quot;sull&#39;ostia&quot;@it ;
+    ex:tecnicaIscrizione &quot;capitale, a pennello, latino&quot;@it ;
+    ex:parteDi ex:ostiaVisione .
 
-ex:LibroApertoSanTommaso
-    a ex:IconographicElement ;
-    rdfs:label "libro aperto rappresentato accanto a San Tommaso"@it ;
-    ex:modelingDecision "locale; non identificato con dbr:Summa_Theologica"@it .</code></pre>
+ex:contestoIntellettualeTomista
+    a ex:ContestoFilosoficoTeologico ;
+    rdfs:label &quot;contesto filosofico-teologico di Tommaso d&#39;Aquino&quot;@it ;
+    ex:nonElementoVisibile true ;
+    skos:relatedMatch dbr:Scholasticism , dbr:Thomism , dbr:Summa_Theologica .</code></pre>
+      </article>
+
+      <article class="enrichment-note">
+        <h3>Nota sull'arricchimento rispetto ad ArCo</h3>
+        <p>
+          Nel RDF finale non sono stati duplicati i dati già modellati in ArCo/Catalogo, come titolo, identificativo <code>1800179488</code>, tipologia, autore attribuito, tecnica, localizzazione e descrizione catalografica. La risorsa ArCo resta quindi la base documentale principale. La verifica è stata fatta sulla <a href="https://dati.cultura.gov.it/lodview-arco/resource/HistoricOrArtisticProperty/1800179488.html" target="_blank" rel="noreferrer">scheda ArCo della risorsa</a> e sulla scheda del Catalogo collegata allo stesso identificativo.
+        </p>
+        <p>
+          L'arricchimento aggiunge solo ciò che nella scheda resta soprattutto testuale: soggetto raffigurato, abito domenicano, ciondolo solare, scrittoio, libro aperto, raggio di sole, calice, ostia, iscrizione <code>IHS</code>, visione eucaristica e contesto tomista. Questi elementi vengono modellati localmente nel namespace <code>ex:</code>.
+        </p>
+        <p>
+          Rispetto alla versione più estesa, la scelta del team è più pulita perché evita di ricostruire ArCo come ci aveva soggerito Chat dalla sua risposta e prova a non utilizzare <code>schema</code> visto che in ArCo, per il nostro ogetto di ricerca non era stato utilizzato precedentemente. I collegamenti DBpedia servono solo come ponti concettuali verso risorse generali, per esempio <code>dbr:Thomas_Aquinas</code>, <code>dbr:Dominican_Order</code>, <code>dbr:Chalice</code>, <code>dbr:Sacramental_bread</code>, <code>dbr:Eucharist</code>, <code>dbr:Scholasticism</code>, <code>dbr:Thomism</code> e <code>dbr:Summa_Theologica</code>.
+        </p>
+        <p>
+          Abbiamo lasciato <code>owl:sameAs</code> soltanto per San Tomasso d'Aquino, abbiamo tolto alcuni elementi che potrebbero essere troppo generici o speculativi.
+        </p>
       </article>
     </section>
 
@@ -3150,7 +3198,7 @@ ex:LibroApertoSanTommaso
         </article>
         <article>
           <span>04</span>
-          <p>Preparare il file Turtle finale, i prompt completi e i risultati dei modelli per la pubblicazione su GitHub Pages.</p>
+          <p>Pubblicare su GitHub Pages il file Turtle finale già integrato, insieme ai prompt completi e ai risultati dei modelli.</p>
         </article>
         <article>
           <span>05</span>

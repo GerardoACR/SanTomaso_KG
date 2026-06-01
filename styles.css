@@ -107,7 +107,8 @@ pre {
 }
 
 .site-nav a:hover,
-.site-nav a.active {
+.site-nav a.active,
+.site-nav a[aria-current="page"] {
   color: var(--blue-950);
   background: rgba(220, 174, 53, 0.18);
 }
@@ -467,6 +468,10 @@ h3 {
 }
 
 .enrichment-note + .table-wrap {
+  margin-top: 22px;
+}
+
+.code-block + .enrichment-note {
   margin-top: 22px;
 }
 
