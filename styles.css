@@ -344,6 +344,10 @@ h3 {
   margin-top: 22px;
 }
 
+.content-flow + .decision-list {
+  margin-top: 22px;
+}
+
 .content-flow,
 .section-intro,
 .section-heading {
@@ -1013,6 +1017,10 @@ tr:last-child td {
 }
 
 .decision-list {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+#discussione .decision-list {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
