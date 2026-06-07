@@ -2710,7 +2710,7 @@ ex:libroApertoSanTommaso
     a ex:ElementoIconograficoVisibile , ex:OggettoRappresentato ;
     rdfs:label &quot;libro aperto&quot;@it ;
     ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it ;
-    ex:notaCritica &quot;Non identificato con la Summa Theologica; il collegamento a Summa Theologica resta solo nel contesto intellettuale di Tommaso.&quot;@it .
+    ex:criticalNote &quot;Non identificato con la Summa Theologica; il collegamento a Summa Theologica resta solo nel contesto intellettuale di Tommaso.&quot;@it .
 
 ex:attoDiScritturaSanTommaso
     a ex:AzioneRappresentata ;
@@ -3066,23 +3066,23 @@ ex:contestoIntellettualeTomista
 @prefix dbr: &lt;http://dbpedia.org/resource/&gt; .
 @prefix skos: &lt;http://www.w3.org/2004/02/skos/core#&gt; .
 @prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
-@prefix dc: &lt;http://purl.org/dc/elements/1.1/&gt; .
+@prefix owl: &lt;http://www.w3.org/2002/07/owl#&gt; .
 
 &lt;https://w3id.org/arco/resource/HistoricOrArtisticProperty/1800179488&gt;
     a arco:HistoricOrArtisticProperty ;
     ex:artMedium &quot;tela/ pittura a olio&quot;@it ;
     ex:location ex:MuseoDiocesanoEDelCodex ;
+    ex:hasRepresentedSubject ex:soggettoInternoDipinto ;
     ex:hasIconographicElement
         ex:abitoDomenicano ,
         ex:ciondoloSole ,
+        ex:scrittoio ,
         ex:libroAperto ,
         ex:raggioDiSole ,
         ex:caliceVisione ,
-        ex:ostiaVisione ,
-        ex:iscrizioneIHSOstia ;
-    ex:about
-        ex:visioneEucaristicaRappresentata ,
-        ex:contestoIntellettualeTomista .
+        ex:ostiaVisione ;
+    ex:about ex:visioneEucaristicaRappresentata ;
+    ex:hasInterpretativeContext ex:contestoIntellettualeTomista .
 
 ex:MuseoDiocesanoEDelCodex
     a ex:Museum ;
@@ -3100,64 +3100,72 @@ ex:soggettoInternoDipinto
     ex:isHolding ex:libroAperto .
 
 ex:abitoDomenicano
-    a ex:ElementoIconograficoVisibile ;
-    rdfs:label &quot;abito da Domenicano&quot;@it ;
-    ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it ;
+    a ex:IconographicElement ;
+    rdfs:label "abito da Domenicano"@it ;
+    ex:visibilityStatus "visibile nella descrizione catalografica"@it ;
+    ex:isIconographicElementOf &lt;https://w3id.org/arco/resource/HistoricOrArtisticProperty/1800179488&gt; ;
     skos:relatedMatch dbr:Dominican_Order .
 
 ex:ciondoloSole
-    a ex:ElementoIconograficoVisibile , ex:ElementoSimbolico ;
+    a ex:IconographicElement ;
     rdfs:label &quot;catena con ciondolo a forma di sole sul petto&quot;@it ;
     ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it ;
-    ex:position &quot;sul petto del santo&quot;@it ;
+    ex:isIconographicElementOf &lt;https://w3id.org/arco/resource/HistoricOrArtisticProperty/1800179488&gt; ;
+    ex:position &quot;sul petto del santo&quot;@it .
+
+ex:scrittoio
+    a ex:IconographicElement ;
+    rdfs:label &quot;scrittoio&quot;@it ;
+    ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it ;
+    ex:isIconographicElementOf &lt;https://w3id.org/arco/resource/HistoricOrArtisticProperty/1800179488&gt; .
 
 ex:libroAperto
-    a ex:ElementoIconograficoVisibile , ex:OggettoRappresentato ;
+    a ex:IconographicElement ;
     rdfs:label &quot;libro aperto&quot;@it ;
     ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it ;
-    ex:notaCritica &quot;Non identificato con la Summa Theologica; il collegamento a Summa Theologica resta solo nel contesto intellettuale di Tommaso.&quot;@it .
+    ex:isIconographicElementOf &lt;https://w3id.org/arco/resource/HistoricOrArtisticProperty/1800179488&gt; ;
+    ex:criticalNote &quot;Non identificato con la Summa Theologica; il collegamento a Summa Theologica resta solo nel contesto intellettuale di Tommaso.&quot;@it .
 
 ex:raggioDiSole
-    a ex:ElementoIconograficoVisibile , ex:ElementoSimbolico ;
+    a ex:IconographicElement ;
     rdfs:label &quot;raggio di sole che illumina San Tommaso&quot;@it ;
     ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it ;
+    ex:isIconographicElementOf &lt;https://w3id.org/arco/resource/HistoricOrArtisticProperty/1800179488&gt; .
 
 ex:visioneEucaristicaRappresentata
-    a ex:InterpretazioneIconograficaPrudente ;
+    a ex:IconographicInterpretation ;
     rdfs:label &quot;visione eucaristica rappresentata&quot;@it ;
+    ex:isIconographicInterpretationOf &lt;https://w3id.org/arco/resource/HistoricOrArtisticProperty/1800179488&gt; ;
+    ex:basedOnIconographicElement ex:caliceVisione ,
+                                  ex:ostiaVisione ;
     skos:relatedMatch dbr:Eucharist , dbr:Real_presence_of_Christ_in_the_Eucharist .
 
 ex:caliceVisione
-    a ex:ElementoIconograficoVisibile , ex:OggettoReligiosoRappresentato ;
+    a ex:IconographicElement ;
     rdfs:label &quot;calice nella visione&quot;@it ;
     ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it ;
-    ex:parteDi ex:visioneEucaristicaRappresentata ;
-    ex:associatoA ex:ostiaVisione ;
+    ex:isIconographicElementOf &lt;https://w3id.org/arco/resource/HistoricOrArtisticProperty/1800179488&gt; ;
+    ex:partOf ex:visioneEucaristicaRappresentata ;
+    ex:associatedWith ex:ostiaVisione ;
     skos:closeMatch dbr:Chalice ;
     skos:relatedMatch dbr:Eucharist .
 
 ex:ostiaVisione
-    a ex:ElementoIconograficoVisibile , ex:OggettoReligiosoRappresentato ;
+    a ex:IconographicElement ;
     rdfs:label &quot;ostia nella visione&quot;@it ;
     ex:visibilityStatus &quot;visibile nella descrizione catalografica&quot;@it ;
-    ex:parteDi ex:visioneEucaristicaRappresentata ;
-    ex:associataA ex:caliceVisione ;
-    ex:portaIscrizione ex:iscrizioneIHSOstia ;
+    ex:isIconographicElementOf &lt;https://w3id.org/arco/resource/HistoricOrArtisticProperty/1800179488&gt; ;
+    ex:partOf ex:visioneEucaristicaRappresentata ;
+    ex:associatedWith ex:caliceVisione ;
+    ex:hasInscription &quot;IHS&quot; ;
     skos:closeMatch dbr:Sacramental_bread ;
     skos:relatedMatch dbr:Eucharist , dbr:Real_presence_of_Christ_in_the_Eucharist .
 
-ex:iscrizioneIHSOstia
-    a ex:IscrizioneDocumentata ;
-    rdfs:label &quot;IHS&quot;@it ;
-    ex:testoIscrizione &quot;IHS&quot; ;
-    ex:collocazione &quot;sull&#39;ostia&quot;@it ;
-    ex:tecnicaIscrizione &quot;capitale, a pennello, latino&quot;@it ;
-    ex:parteDi ex:ostiaVisione .
-
 ex:contestoIntellettualeTomista
-    a ex:ContestoFilosoficoTeologico ;
+    a ex:InterpretativeContext ;
     rdfs:label &quot;contesto filosofico-teologico di Tommaso d&#39;Aquino&quot;@it ;
-    ex:nonElementoVisibile true ;
+    ex:isNonVisibleElement true ;
+    ex:isInterpretativeContextOf &lt;https://w3id.org/arco/resource/HistoricOrArtisticProperty/1800179488&gt; ;
     skos:relatedMatch dbr:Scholasticism , dbr:Thomism , dbr:Summa_Theologica .</code></pre>
       </article>
 
